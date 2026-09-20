@@ -68,7 +68,7 @@ def main() -> None:
 
     check("corpus present", lambda: f"{len(list((ROOT/'data/corpus').glob('*.md')))} docs")
     check("ticket data present", lambda: (
-        f"{sum(1 for _ in (ROOT/'data/eval/extraction_dev.jsonl').open())} dev cases"))
+        f"{sum(1 for _ in (ROOT/'data/eval/extraction_dev.jsonl').open(encoding='utf-8'))} dev cases"))
     check("golden RAG set present", lambda: (
         f"{sum(1 for _ in (ROOT/'data/eval/rag_golden.jsonl').open())} questions"))
 

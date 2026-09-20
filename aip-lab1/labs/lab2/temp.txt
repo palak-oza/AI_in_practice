@@ -1,0 +1,39 @@
+{"id": "T0020", "input": "---------- Forwarded message ----------\nFrom: nikhil.chatterjee94@example.com\nDate: 5 Mar 2026\nSubject: Re: Policy query\n\nWhere can I download my e-card for policy AUR-3715374? I cannot find it in the app.\n\nThanks,\nNikhil Chatterjee\n\n> On 21 Mar 2026, Aurora Support <support@aurorahealth.example> wrote:\n> Dear Customer, thank you for contacting Aurora. Your reference number is\n> SR-100020. We aim to respond within 3 working days.\n", "expected": {"category": "technical", "urgency": 1, "sentiment": "neutral", "policy_number": "AUR-3715374", "product": "unknown", "escalate": false, "contains_pii": true, "language": "en"}}
+{"id": "T0059", "input": "[via WhatsApp Business]\nWhat is the waiting period for cataract surgery? This needs to be resolved before tomorrow morning.\n\nThanks & Regards,\nSameer Ahluwalia\nMob: 9455169069", "expected": {"category": "information", "urgency": 2, "sentiment": "neutral", "policy_number": null, "product": "unknown", "escalate": false, "contains_pii": true, "language": "en"}}
+{"id": "T0086", "input": "---------- Forwarded message ----------\nFrom: divya.khan55@example.com\nDate: 14 Mar 2026\nSubject: Re: Policy query\n\nYour agent mis-sold me THIS POLICY. NOBODY TOLD me maternity has a 21-month waiting period when I bought my Aurora Gold policy. I want a full refund.\n\nSent from my iPhone", "expected": {"category": "complaint", "urgency": 4, "sentiment": "angry", "policy_number": null, "product": "gold", "escalate": true, "contains_pii": true, "language": "en"}}
+{"id": "T0054", "input": "Your agent mis-sold me this policy. Nobody told me maternity has a 5-month waiting period when I bought my policy. I want a full refund.\n\nYours sincerely,\nTenzin Dsouza", "expected": {"category": "complaint", "urgency": 4, "sentiment": "angry", "policy_number": null, "product": "unknown", "escalate": true, "contains_pii": false, "language": "en"}}
+{"id": "T0095", "input": "<div dir=\"ltr\"><p>How many wellness points do I currently have on AUR-9746149 and what discount does that give me? I am on the Aurora Gold plan.</p></div>\n\n-- \nNikhil Sharma\n9355126145\nnikhil.sharma65@example.com", "expected": {"category": "information", "urgency": 2, "sentiment": "neutral", "policy_number": "AUR-9746149", "product": "gold", "escalate": false, "contains_pii": true, "language": "en"}}
+{"id": "T0196", "input": "The auto-debit mandate for AUR-7191568 failed again even though there was balance in the account. Rs 63000 is still showing as due. Please fix the NACH mandate. This needs to be resolved before tomorrow morning. Bahut pareshani ho rahi hai.\n\nSent from my iPhone\n\n> On 14 Mar 2026, Aurora Support <support@aurorahealth.example> wrote:\n> Dear Customer, thank you for contacting Aurora. Your reference number is\n> SR-100196. We aim to respond within 3 working days.\n", "expected": {"category": "billing", "urgency": 4, "sentiment": "frustrated", "policy_number": "AUR-7191568", "product": "unknown", "escalate": true, "contains_pii": false, "language": "hi-en"}}
+
+
+
+sampling guidance into the `system` instructions instead.
+── few_shot ── n=60  errors=7                               
+   error            1.0000
+   escalated        0.0000
+   field_accuracy   0.9175
+   record_accuracy  0.5283
+   schema_valid     1.0000
+   error_rate       0.1167
+   cost_usd         0.0248   (p50 0 ms / p95 20776 ms, 53 calls, 29 cached)
+   record_accuracy 95% CI      [0.409, 0.654]
+   cost / 1k tickets           $0.41
+   cost / year @ 10,000/day  $1,508
+
+metric            zero_shot    few_shot
+---------------------------------------
+record_accuracy      0.4667     0.5283*
+field_accuracy       0.9062     0.9175*
+schema_valid        1.0000*     1.0000*
+error_rate           0.0000     0.1167*
+cost_usd             0.0092      0.0248
+latency_p95_ms   16595.2000  20775.7000
+
+* = best on that metric. Remember to read the cost row before celebrating.
+
+paired comparisons vs. the first variant:
+  zero_shot vs few_shot: b=7 c=7 -> no significant difference (p=1.0000) -- choose on cost
+
+Dominated configurations (worse on quality AND cost AND latency):
+  none
+(.venv) PS C:\Users\palal oza\Desktop\Plaksha\AI-in-Practice-Lab-main\aip-lab1>                                                                   

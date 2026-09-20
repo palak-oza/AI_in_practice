@@ -1,0 +1,273 @@
+
+**BASELINE**
+(.venv) PS C:\Users\palal oza\Desktop\Plaksha\AI-in-Practice-Lab-main\aip-lab1> python labs/lab3/search.py --baseline
+corpus: 30 docs -> 91 chunks (mean 707 chars)
+config                           hit_rate@1     hit_rate@5       recall@5            mrr        ndcg@10 latency_p95_ms
+----------------------------------------------------------------------------------------------------------------------
+baseline sliding-800 dense           0.7857         0.9286         0.8452         0.8451         0.8053       893.1547
+
+kind             hit_rate@5     n
+---------------------------------
+aggregation          1.0000     4
+multi_hop            1.0000    10
+paraphrase           1.0000     5
+single_hop           0.8889    18
+trap_archived        1.0000     3
+unanswerable         0.5000     2
+
+Write these numbers down before you change anything.
+
+
+**Part A**
+ngvenv) PS C:\Users\palal oza\Desktop\Plaksha\AI-in-Practice-Lab-main\aip-lab1> 
+
+================================================================================
+A1: CHUNKING STRATEGIES (size=800)
+================================================================================
+
+fixed: 83 chunks | build=0.42 ms
+  hit@1=0.7381, hit@5=0.9524, recall@5=0.8373, MRR=0.8387, nDCG@10=0.7952
+
+sliding: 91 chunks | build=0.33 ms
+  hit@1=0.7857, hit@5=0.9286, recall@5=0.8452, MRR=0.8451, nDCG@10=0.8053
+  embedded 98/98 (1999 ms/batch)
+
+recursive: 98 chunks | build=1.23 ms
+  hit@1=0.7857, hit@5=0.9286, recall@5=0.8393, MRR=0.8552, nDCG@10=0.8127
+  embedded 164/164 (1740 ms/batch)
+
+markdown: 164 chunks | build=2.05 ms
+  hit@1=0.7619, hit@5=0.9762, recall@5=0.8988, MRR=0.8720, nDCG@10=0.8458
+
+A1 SUMMARY
+config          hit_rate@1     hit_rate@5       recall@5            mrr        ndcg@10 latency_p95_ms
+-----------------------------------------------------------------------------------------------------
+fixed               0.7381         0.9524         0.8373         0.8387         0.7952         4.1561
+sliding             0.7857         0.9286         0.8452         0.8451         0.8053         5.9905
+recursive           0.7857         0.9286         0.8393         0.8552         0.8127         3.8449
+markdown            0.7619         0.9762         0.8988         0.8720         0.8458         4.0596
+
+Best chunking strategy based on MRR: markdown
+
+================================================================================
+A2: CHUNK SIZE SWEEP (markdown)
+================================================================================
+  embedded 129/129 (620 ms/batch))
+
+markdown-400: 235 chunks | build=1.90 ms
+  hit@1=0.7857, hit@5=0.9762, recall@5=0.9028, MRR=0.8800, nDCG@10=0.8527
+
+markdown-800: 164 chunks | build=3.60 ms
+  hit@1=0.7619, hit@5=0.9762, recall@5=0.8988, MRR=0.8720, nDCG@10=0.8458
+  embedded 12/12 (872 ms/batch)
+
+markdown-1600: 150 chunks | build=5.85 ms
+  hit@1=0.7143, hit@5=0.9524, recall@5=0.8750, MRR=0.8262, nDCG@10=0.8075
+
+A2 SUMMARY
+config              hit_rate@1     hit_rate@5       recall@5            mrr        ndcg@10 latency_p95_ms
+---------------------------------------------------------------------------------------------------------
+markdown-400            0.7857         0.9762         0.9028         0.8800         0.8527         4.0496
+markdown-800            0.7619         0.9762         0.8988         0.8720         0.8458         3.8968
+markdown-1600           0.7143         0.9524         0.8750         0.8262         0.8075         4.1355
+
+================================================================================
+A3: MARKDOWN PREFIX EFFECT
+================================================================================
+
+with-prefix: 164 chunks | build=4.03 ms
+  hit@1=0.7619, hit@5=0.9762, recall@5=0.8988, MRR=0.8720, nDCG@10=0.8458
+  embedded 164/164 (1849 ms/batch)
+
+without-prefix: 164 chunks | build=1.28 ms
+  hit@1=0.6190, hit@5=1.0000, recall@5=0.9048, MRR=0.7837, nDCG@10=0.7915
+
+A3 SUMMARY
+config               hit_rate@1     hit_rate@5       recall@5            mrr        ndcg@10 latency_p95_ms
+----------------------------------------------------------------------------------------------------------
+with-prefix              0.7619         0.9762         0.8988         0.8720         0.8458         3.8796
+without-prefix           0.6190         1.0000         0.9048         0.7837         0.7915         4.1638
+(.venv) PS C:\Users\palal oza\Desktop\Plaksha\AI-in-Practice-Lab-main\aip-lab1> 
+
+
+
+================================================================================
+PART B: RETRIEVAL SWEEP
+================================================================================
+
+Using markdown chunking: 235 chunks
+
+================================================================================
+B1: DENSE vs BM25 vs HYBRID
+================================================================================
+
+DENSE
+  hit@1=0.7857, hit@5=0.9762, recall@5=0.9028, MRR=0.8800, nDCG@10=0.8527
+
+BM25
+  hit@1=0.4762, hit@5=0.9286, recall@5=0.7956, MRR=0.6698, nDCG@10=0.6978
+
+HYBRID
+  hit@1=0.6667, hit@5=0.9762, recall@5=0.8631, MRR=0.7976, nDCG@10=0.7949
+
+B1 SUMMARY
+config       hit_rate@1     hit_rate@5       recall@5            mrr        ndcg@10 latency_p95_ms
+--------------------------------------------------------------------------------------------------
+dense            0.7857         0.9762         0.9028         0.8800         0.8527         9.2386
+bm25             0.4762         0.9286         0.7956         0.6698         0.6978         3.2695
+hybrid           0.6667         0.9762         0.8631         0.7976         0.7949        11.2244
+
+================================================================================
+B2: PER-QUESTION-KIND MRR
+================================================================================
+
+DENSE
+kind                    mrr     n
+---------------------------------
+aggregation          0.8750     4
+multi_hop            1.0000    10
+paraphrase           0.8000     5
+single_hop           0.9074    18
+trap_archived        0.8333     3
+unanswerable         0.3125     2
+
+Q44 MRR: 0.5
+Q41 MRR: 1.0
+
+BM25
+kind                    mrr     n
+---------------------------------
+aggregation          0.3750     4
+multi_hop            0.6500    10
+paraphrase           0.4867     5
+single_hop           0.8519    18
+trap_archived        0.5111     3
+unanswerable         0.4167     2
+
+Q44 MRR: 1.0
+Q41 MRR: 0.0
+
+HYBRID
+kind                    mrr     n
+---------------------------------
+aggregation          0.5833     4
+multi_hop            0.8167    10
+paraphrase           0.6500     5
+single_hop           0.9444    18
+trap_archived        0.6667     3
+unanswerable         0.3750     2
+
+Q44 MRR: 1.0
+Q41 MRR: 0.25
+
+================================================================================
+B3: RRF k SWEEP
+================================================================================
+
+RRF k=10: nDCG@10=0.8156, MRR=0.8115, Hit@1=0.6667, Hit@5=1.0000
+
+RRF k=30: nDCG@10=0.7949, MRR=0.7976, Hit@1=0.6667, Hit@5=0.9762
+
+RRF k=60: nDCG@10=0.7949, MRR=0.7976, Hit@1=0.6667, Hit@5=0.9762
+
+RRF k=100: nDCG@10=0.7901, MRR=0.7976, Hit@1=0.6667, Hit@5=0.9762
+
+B3 SUMMARY
+config               hit_rate@1     hit_rate@5       recall@5            mrr        ndcg@10 latency_p95_ms
+----------------------------------------------------------------------------------------------------------
+hybrid-rrf-10            0.6667         1.0000         0.8849         0.8115         0.8156        10.6949
+hybrid-rrf-30            0.6667         0.9762         0.8631         0.7976         0.7949        10.6269
+hybrid-rrf-60            0.6667         0.9762         0.8631         0.7976         0.7949        14.5634
+hybrid-rrf-100           0.6667         0.9762         0.8631         0.7976         0.7901        13.2700
+
+================================================================================
+B4: UNEQUAL FUSION WEIGHTS
+================================================================================
+
+weights=[2.0, 1.0]: nDCG@10=0.8068, MRR=0.8103, Hit@1=0.6905, Hit@5=0.9762
+
+B4 SUMMARY
+config                       hit_rate@1     hit_rate@5       recall@5            mrr        ndcg@10 latency_p95_ms
+------------------------------------------------------------------------------------------------------------------
+hybrid-weights-2.0-1.0           0.6905         0.9762         0.8750         0.8103         0.8068        11.3366
+
+
+
+LLM Reranker: nDCG@10=0.8418, MRR=0.8810, Hit@1=0.8095, Hit@5=0.9524
+Total evaluation time: 1143267.60 ms
+
+Per-kind MRR:
+kind                    mrr     n
+---------------------------------
+aggregation          0.8750     4
+multi_hop            0.9500    10
+paraphrase           0.7000     5
+single_hop           0.9722    18
+trap_archived        0.8333     3
+unanswerable         0.2500     2
+
+================================================================================
+C3: RERANKER DECISION TABLE
+================================================================================
+
+configuration                     MRR     nDCG@10       Hit@1    Latency(ms)
+----------------------------------------------------------------------------
+CrossEncoder                   0.8619      0.8174      0.7619         981.39
+LLM                            0.8810      0.8418      0.8095       30204.06
+
+Deployment considerations:
+Interactive search box:
+  Consider reranking latency and per-query cost, because the user is waiting for the result.
+
+Overnight batch:
+  Higher latency/cost may be acceptable when results can be computed ahead of time.
+
+================================================================================
+C4: QUERIES HURT BY RERANKING
+================================================================================
+
+Question: Q01
+Query: How many days do I have to submit a reimbursement claim after discharge?
+Baseline MRR:       1.0000
+CrossEncoder MRR:   0.5000
+LLM reranker MRR:   1.0000
+CrossEncoder change: -0.5000
+
+
+
+
+flatter your metrics by making the corpus artificially easy to rank.            python labs/lab3/search.py --sweep index 
+  venv) PS C:\Users\palal oza\Desktop\Plaksha\AI-in-Practice-Lab-main\aip-lab1> 
+================================================================================
+D1/D2: CHROMA vs DENSE
+================================================================================
+config       hit_rate@1     hit_rate@5       recall@5            mrr        ndcg@10 latency_p95_ms
+--------------------------------------------------------------------------------------------------
+dense            0.7857         0.9762         0.9028         0.8800         0.8527         6.8593
+chroma           0.7857         0.9762         0.9028         0.8800         0.8527        13.0370
+
+Recall@5 and latency comparison:
+--------------------------------------------------------------------------------
+dense      | recall@5=0.9028 | p50=5.91 ms | p95=6.86 ms
+chroma     | recall@5=0.9028 | p50=11.24 ms | p95=13.04 ms
+
+================================================================================
+D3: METADATA FILTERING
+================================================================================
+
+Before metadata filtering:
+Q29: hit@1 = 1
+Q30: hit@1 = 0
+Q31: hit@1 = 1
+
+After filtering status='current':
+Q29: hit@1 = 0
+Q30: hit@1 = 0
+Q31: hit@1 = 0
+
+D3 SUMMARY
+--------------------------------------------------------------------------------
+Question       Before      After
+Q29                 1          0
+Q30                 0          0
+Q31                 1          0
