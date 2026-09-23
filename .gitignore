@@ -1,7 +1,7 @@
 .venv/
 .vscode/
 **/.env
-
+__pycache__/
 aip-lab1/data/corpus_scaled/
 aip-lab1/.aip_cache/
 aip-lab1/.aip_traces/
