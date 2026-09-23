@@ -1,0 +1,42 @@
+
+n = 45  (40 answerable, 5 unanswerable)
+citation validity   1.000   (target 1.000)
+faithfulness        1.000
+correctness (0-2)   0.000  normalised 0.000
+refusal recall      1.000   (5/5)
+refusal precision   0.111   (45 refusals total)
+
+[lab4-full] calls=93 (cache hits 1%) tokens=65071in/26800out cost=$0.2557 latency p50=2732ms p95=3666ms
+
+by question kind (mean correctness / 2):
+  aggregation      0.000  n=4
+  multi_hop        0.000  n=10
+  paraphrase       0.000  n=5
+  single_hop       0.000  n=18
+  trap_archived    0.000  n=3
+
+saved -> C:\Users\palal oza\Desktop\Plaksha\AI-in-Practice-Lab-main\aip-lab1\reports\lab4.json   (Lab 5 reads this file)
+(.venv) PS C:\Users\palal oza\Desktop\Plaksha\AI-in-Practice-Lab-main\aip-lab1> 
+
+
+
+
+
+
+n = 45  (40 answerable, 5 unanswerable)
+citation validity   1.000   (target 1.000)
+faithfulness        0.956
+correctness (0-2)   1.550  normalised 0.775
+refusal recall      1.000   (5/5)
+refusal precision   0.714   (7 refusals total)
+
+[lab4-full] calls=128 (cache hits 62%) tokens=68636in/55832out cost=$0.2233 latency p50=0ms p95=3460ms
+
+by question kind (mean correctness / 2):
+  aggregation      0.750  n=4
+  multi_hop        0.600  n=10
+  paraphrase       0.700  n=5
+  single_hop       0.889  n=18
+  trap_archived    0.833  n=3
+
+ 
