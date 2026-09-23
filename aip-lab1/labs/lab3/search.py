@@ -26,9 +26,9 @@ from aip.chunking import STRATEGIES, Chunk  # noqa: E402
 from aip.evals import retrieval_metrics  # noqa: E402
 from aip.retrieval import Bm25Retriever, DenseRetriever, HybridRetriever, Retriever, CrossEncoderReranker, LLMReranker,ChromaRetriever  # noqa: E402
 
-CORPUS_DIR = ROOT / "data/corpus"
+CORPUS_DIR = ROOT / "data/corpus_scaled"
 GOLDEN = ROOT / "data/eval/rag_golden.jsonl"
-
+REPORT_PATH = ROOT / "reports" / "lab3_sweeps.json"
 
 # ---------------------------------------------------------------------------
 # scaffolding (provided)
@@ -151,6 +151,27 @@ def sweep_baseline() -> None:
     print("\nWrite these numbers down before you change anything.")
 
 
+def save_sweep_results(sweep_name, results):
+    REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
+
+    if REPORT_PATH.exists():
+        try:
+            with REPORT_PATH.open("r", encoding="utf-8") as f:
+                all_results = json.load(f)
+        except json.JSONDecodeError:
+            all_results = {}
+    else:
+        all_results = {}
+
+    all_results[sweep_name] = results
+
+    with REPORT_PATH.open("w", encoding="utf-8") as f:
+        json.dump(all_results, f, indent=2)
+
+    print(f"\nSaved results to: {REPORT_PATH}")
+
+
+
 def sweep_chunking() -> None:
     """TODO A1-A3.
 
@@ -160,9 +181,11 @@ def sweep_chunking() -> None:
         (Strip it with a list comprehension over the chunks -- do not modify
          aip/chunking.py; other labs depend on it.)
 
-    Report chunk count and index build time alongside quality. A configuration
-    that is 1 point better and takes 4x as long to build is a real trade-off.
+    Report chunk count and index build time alongside quality.
+    A configuration that is 1 point better and takes 4x as long to build
+    is a real trade-off.
     """
+
     corpus, questions = load_corpus(), load_questions()
 
     # ---------------------------------------------------------
@@ -190,7 +213,12 @@ def sweep_chunking() -> None:
 
         m = evaluate(retriever, questions)
 
-        results[strategy] = m
+        # Add chunking metadata to the result
+        m["chunks"] = len(chunks)
+        m["build_ms"] = build_time
+        m["mean_chars"] = statistics.fmean(len(c) for c in chunks)
+
+        results[f"{strategy}-800"] = m
 
         print(
             f"\n{strategy}: "
@@ -216,6 +244,9 @@ def sweep_chunking() -> None:
         results,
         key=lambda s: results[s]["mrr"]
     )
+
+    # Remove "-800" because the result keys are now strategy-800
+    best_strategy = best_strategy.rsplit("-", 1)[0]
 
     print(
         f"\nBest chunking strategy based on MRR: "
@@ -248,6 +279,12 @@ def sweep_chunking() -> None:
         m = evaluate(retriever, questions)
 
         config_name = f"{best_strategy}-{size}"
+
+        # Add chunking metadata
+        m["chunks"] = len(chunks)
+        m["build_ms"] = build_time
+        m["mean_chars"] = statistics.fmean(len(c) for c in chunks)
+
         size_results[config_name] = m
 
         print(
@@ -276,7 +313,9 @@ def sweep_chunking() -> None:
 
     prefix_results = {}
 
+    # ---------------------------------------------------------
     # WITH prefix
+    # ---------------------------------------------------------
     t0 = time.perf_counter()
 
     chunks_with = build_chunks(
@@ -289,7 +328,18 @@ def sweep_chunking() -> None:
     build_time_with = (time.perf_counter() - t0) * 1000
 
     retriever_with = DenseRetriever(chunks_with)
-    m_with = evaluate(retriever_with, questions)
+
+    m_with = evaluate(
+        retriever_with,
+        questions
+    )
+
+    # Add metadata
+    m_with["chunks"] = len(chunks_with)
+    m_with["build_ms"] = build_time_with
+    m_with["mean_chars"] = statistics.fmean(
+        len(c) for c in chunks_with
+    )
 
     prefix_results["with-prefix"] = m_with
 
@@ -307,9 +357,12 @@ def sweep_chunking() -> None:
         f"nDCG@10={m_with['ndcg@10']:.4f}"
     )
 
+    # ---------------------------------------------------------
     # WITHOUT prefix
+    # ---------------------------------------------------------
     # The chunk text contains "[heading > path]" prefix.
     # Remove it without modifying aip/chunking.py.
+
     t0 = time.perf_counter()
 
     chunks_without = build_chunks(
@@ -326,7 +379,18 @@ def sweep_chunking() -> None:
     build_time_without = (time.perf_counter() - t0) * 1000
 
     retriever_without = DenseRetriever(chunks_without)
-    m_without = evaluate(retriever_without, questions)
+
+    m_without = evaluate(
+        retriever_without,
+        questions
+    )
+
+    # Add metadata
+    m_without["chunks"] = len(chunks_without)
+    m_without["build_ms"] = build_time_without
+    m_without["mean_chars"] = statistics.fmean(
+        len(c) for c in chunks_without
+    )
 
     prefix_results["without-prefix"] = m_without
 
@@ -347,7 +411,26 @@ def sweep_chunking() -> None:
     print("\nA3 SUMMARY")
     print(table(prefix_results))
 
-    
+    # ---------------------------------------------------------
+    # Save A1 + A2 + A3 results
+    # ---------------------------------------------------------
+
+    all_chunking_results = {}
+
+    # A1
+    all_chunking_results.update(results)
+
+    # A2
+    all_chunking_results.update(size_results)
+
+    # A3
+    all_chunking_results.update(prefix_results)
+
+    save_sweep_results(
+        "chunking",
+        all_chunking_results
+    )
+
 def sweep_retrieval() -> None:
     """B1-B4 retrieval sweep using the best chunking configuration from Part A.
 
@@ -362,8 +445,6 @@ def sweep_retrieval() -> None:
     # ---------------------------------------------------------
     # Use the best chunking configuration from Part A
     # ---------------------------------------------------------
-    # Part A identified markdown chunking at size=400 as the
-    # configuration being used for Part B.
     chunks = build_chunks(
         corpus,
         strategy="markdown",
@@ -390,7 +471,6 @@ def sweep_retrieval() -> None:
     dense = DenseRetriever(chunks)
     bm25 = Bm25Retriever(chunks)
 
-    # HybridRetriever expects an iterable/list of retrievers.
     hybrid = HybridRetriever(
         [dense, bm25]
     )
@@ -405,6 +485,13 @@ def sweep_retrieval() -> None:
 
     for name, retriever in retrievers.items():
         m = evaluate(retriever, questions)
+
+        # Add configuration information
+        m["chunks"] = len(chunks)
+        m["chunk_strategy"] = "markdown"
+        m["chunk_size"] = 400
+        m["overlap"] = 150
+
         results[name] = m
 
         print(f"\n{name.upper()}")
@@ -464,6 +551,13 @@ def sweep_retrieval() -> None:
             questions,
         )
 
+        # Add configuration information
+        m["chunks"] = len(chunks)
+        m["chunk_strategy"] = "markdown"
+        m["chunk_size"] = 400
+        m["overlap"] = 150
+        m["rrf_k"] = rrf_k
+
         rrf_results[f"hybrid-rrf-{rrf_k}"] = m
 
         print(
@@ -508,6 +602,13 @@ def sweep_retrieval() -> None:
             f"{weights[0]}-{weights[1]}"
         )
 
+        # Add configuration information
+        m["chunks"] = len(chunks)
+        m["chunk_strategy"] = "markdown"
+        m["chunk_size"] = 400
+        m["overlap"] = 150
+        m["weights"] = weights
+
         weighted_results[name] = m
 
         print(
@@ -520,10 +621,28 @@ def sweep_retrieval() -> None:
 
     print("\nB4 SUMMARY")
     print(table(weighted_results))
-    
+
+    # ---------------------------------------------------------
+    # Save all B1-B4 results
+    # ---------------------------------------------------------
+
+    all_retrieval_results = {}
+
+    # B1
+    all_retrieval_results.update(results)
+
+    # B3
+    all_retrieval_results.update(rrf_results)
+
+    # B4
+    all_retrieval_results.update(weighted_results)
+
+    save_sweep_results(
+        "retrieval",
+        all_retrieval_results
+    )
     
 
-    
 def sweep_rerank() -> None:
     """TODO C1-C4.
 
@@ -537,6 +656,7 @@ def sweep_rerank() -> None:
     C4: find a query reranking made worse, using
         metrics['_per_question_mrr'] before and after.
     """
+
     corpus, questions = load_corpus(), load_questions()
 
     # ---------------------------------------------------------
@@ -574,7 +694,6 @@ def sweep_rerank() -> None:
     print("C1: CROSS-ENCODER RERANKER")
     print("=" * 80)
 
-    # Use the CrossEncoderReranker imported in your file.
     cross_encoder = CrossEncoderReranker()
 
     t0 = time.perf_counter()
@@ -588,6 +707,16 @@ def sweep_rerank() -> None:
     )
 
     cross_time = (time.perf_counter() - t0) * 1000
+
+    # Add experiment metadata
+    cross_metrics["reranker"] = "cross-encoder"
+    cross_metrics["retrieval_k"] = RETRIEVAL_K
+    cross_metrics["final_k"] = FINAL_K
+    cross_metrics["chunks"] = len(chunks)
+    cross_metrics["chunk_strategy"] = "markdown"
+    cross_metrics["chunk_size"] = 400
+    cross_metrics["overlap"] = 150
+    cross_metrics["evaluation_time_ms"] = cross_time
 
     print(
         f"\nCrossEncoder: "
@@ -612,7 +741,6 @@ def sweep_rerank() -> None:
     print("C2: LLM RERANKER")
     print("=" * 80)
 
-    # Use the LLMReranker imported in your file.
     llm_reranker = LLMReranker()
 
     t0 = time.perf_counter()
@@ -626,6 +754,16 @@ def sweep_rerank() -> None:
     )
 
     llm_time = (time.perf_counter() - t0) * 1000
+
+    # Add experiment metadata
+    llm_metrics["reranker"] = "llm"
+    llm_metrics["retrieval_k"] = RETRIEVAL_K
+    llm_metrics["final_k"] = FINAL_K
+    llm_metrics["chunks"] = len(chunks)
+    llm_metrics["chunk_strategy"] = "markdown"
+    llm_metrics["chunk_size"] = 400
+    llm_metrics["overlap"] = 150
+    llm_metrics["evaluation_time_ms"] = llm_time
 
     print(
         f"\nLLM Reranker: "
@@ -677,9 +815,11 @@ def sweep_rerank() -> None:
     )
 
     print("\nDeployment considerations:")
+
     print(
         "Interactive search box:"
     )
+
     print(
         "  Consider reranking latency and per-query cost, "
         "because the user is waiting for the result."
@@ -688,6 +828,7 @@ def sweep_rerank() -> None:
     print(
         "\nOvernight batch:"
     )
+
     print(
         "  Higher latency/cost may be acceptable when results "
         "can be computed ahead of time."
@@ -700,7 +841,6 @@ def sweep_rerank() -> None:
     print("C4: QUERIES HURT BY RERANKING")
     print("=" * 80)
 
-    # Baseline retrieval with the same candidate count.
     baseline_metrics = evaluate(
         dense,
         questions,
@@ -741,7 +881,6 @@ def sweep_rerank() -> None:
                     f"{llm - base:+.4f}"
                 )
 
-            # Print the first example required by the lab.
             break
 
     if not found:
@@ -750,6 +889,21 @@ def sweep_rerank() -> None:
             "reduced MRR relative to the baseline."
         )
 
+    # ---------------------------------------------------------
+    # Save C1 + C2 results
+    # ---------------------------------------------------------
+
+    all_rerank_results = {
+        "cross-encoder": cross_metrics,
+        "llm": llm_metrics,
+    }
+
+    save_sweep_results(
+        "rerank",
+        all_rerank_results
+    )
+    
+    
 def sweep_index() -> None:
     """TODO D1-D3.
 
@@ -762,7 +916,6 @@ def sweep_index() -> None:
         Report hit_rate@1 on Q29/Q30/Q31 before and after (hit_rate@1, not
         @5 -- @5 is saturated here and will hide the whole effect).
     """
-
 
     corpus, questions = load_corpus(), load_questions()
 
@@ -790,6 +943,19 @@ def sweep_index() -> None:
     dense_results = evaluate(dense, questions)
     chroma_results = evaluate(chroma, questions)
 
+    # Add experiment metadata
+    dense_results["chunks"] = len(chunks)
+    dense_results["chunk_strategy"] = "markdown"
+    dense_results["chunk_size"] = 400
+    dense_results["overlap"] = 150
+    dense_results["index"] = "dense"
+
+    chroma_results["chunks"] = len(chunks)
+    chroma_results["chunk_strategy"] = "markdown"
+    chroma_results["chunk_size"] = 400
+    chroma_results["overlap"] = 150
+    chroma_results["index"] = "chroma"
+
     results = {
         "dense": dense_results,
         "chroma": chroma_results,
@@ -806,11 +972,6 @@ def sweep_index() -> None:
 
     # ---------------------------------------------------------
     # D2: Latency at different corpus sizes
-    #
-    # The corpus expansion is done separately using:
-    # python scripts/expand_corpus.py --docs 4000
-    #
-    # This function only measures the current corpus/index.
     # ---------------------------------------------------------
 
     print("\n" + "=" * 80)
@@ -828,7 +989,12 @@ def sweep_index() -> None:
 
         for q in questions:
             t0 = time.perf_counter()
-            retriever.search(q["question"], k=10)
+
+            retriever.search(
+                q["question"],
+                k=10
+            )
+
             latencies.append(
                 (time.perf_counter() - t0) * 1000
             )
@@ -848,6 +1014,7 @@ def sweep_index() -> None:
         f"Dense  : p50={dense_p50:.2f} ms, "
         f"p95={dense_p95:.2f} ms"
     )
+
     print(
         f"Chroma : p50={chroma_p50:.2f} ms, "
         f"p95={chroma_p95:.2f} ms"
@@ -898,7 +1065,9 @@ def sweep_index() -> None:
             k=5
         )
 
-        relevant_docs = set(question["relevant_docs"])
+        relevant_docs = set(
+            question["relevant_docs"]
+        )
 
         hit = 0
 
@@ -908,7 +1077,9 @@ def sweep_index() -> None:
 
         before_scores[qid] = hit
 
-        print(f"{qid}: hit@1 = {hit}")
+        print(
+            f"{qid}: hit@1 = {hit}"
+        )
 
     # ---------------------------------------------------------
     # After filtering: current documents only
@@ -930,7 +1101,9 @@ def sweep_index() -> None:
             where={"status": "current"}
         )
 
-        relevant_docs = set(question["relevant_docs"])
+        relevant_docs = set(
+            question["relevant_docs"]
+        )
 
         hit = 0
 
@@ -940,7 +1113,9 @@ def sweep_index() -> None:
 
         after_scores[qid] = hit
 
-        print(f"{qid}: hit@1 = {hit}")
+        print(
+            f"{qid}: hit@1 = {hit}"
+        )
 
     # ---------------------------------------------------------
     # D3 summary
@@ -948,6 +1123,7 @@ def sweep_index() -> None:
 
     print("\nD3 SUMMARY")
     print("-" * 80)
+
     print(
         f"{'Question':10s}"
         f"{'Before':>10s}"
@@ -961,6 +1137,35 @@ def sweep_index() -> None:
             f"{after_scores[qid]:>10d}"
         )
 
+    # ---------------------------------------------------------
+    # Save D1 + D2 + D3 results
+    # ---------------------------------------------------------
+
+    all_index_results = {
+        "dense": dense_results,
+        "chroma": chroma_results,
+
+        "latency": {
+            "chunks": len(chunks),
+            "dense_p50_ms": dense_p50,
+            "dense_p95_ms": dense_p95,
+            "chroma_p50_ms": chroma_p50,
+            "chroma_p95_ms": chroma_p95,
+        },
+
+        "metadata_filtering": {
+            "qids": qids,
+            "before": before_scores,
+            "after": after_scores,
+        },
+    }
+
+    save_sweep_results(
+        "index",
+        all_index_results
+    )
+    
+    
 SWEEPS = {
     "chunking": sweep_chunking,
     "retrieval": sweep_retrieval,
