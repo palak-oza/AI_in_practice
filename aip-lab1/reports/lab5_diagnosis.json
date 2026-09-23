@@ -1,0 +1,92 @@
+[
+  {
+    "id": "Q04",
+    "kind": "single_hop",
+    "mode": 1,
+    "mode_name": "missing_content",
+    "evidence": "gold answer content not found in the relevant documents",
+    "question": "What is the waiting period for pre-existing diseases?",
+    "answer": "Waiting periods require continuous coverage from the initial policy commencement date before claims become payable [1][3], and pre-existing conditions are subject to specific rules if diagnosed within 48 months prior to the start date [2][5]. The sources do not state the specific waiting period dura"
+  },
+  {
+    "id": "Q11",
+    "kind": "single_hop",
+    "mode": 1,
+    "mode_name": "missing_content",
+    "evidence": "gold answer content not found in the relevant documents",
+    "question": "How much ambulance cover is there?",
+    "answer": "Across all plans, road ambulance cover is ₹5,000 per hospitalisation [2][3][4][5]. In addition, the Gold plan provides air ambulance cover up to ₹2,50,000 per policy year within India, subject to prior authorisation [2]."
+  },
+  {
+    "id": "Q20",
+    "kind": "multi_hop",
+    "mode": 1,
+    "mode_name": "missing_content",
+    "evidence": "gold answer content not found in the relevant documents",
+    "question": "My mother is 63 and I want to add her to my policy. Which plans allow it and what changes?",
+    "answer": "Dependent parents can be covered under the Silver plan (at an extra premium) as well as the Gold and Platinum plans, but cannot be added under the Bronze plan [2][3]. When adding a parent, the policy premium changes because it is determined by the age of the eldest member covered, which often makes "
+  },
+  {
+    "id": "Q23",
+    "kind": "multi_hop",
+    "mode": 1,
+    "mode_name": "missing_content",
+    "evidence": "gold answer content not found in the relevant documents",
+    "question": "Can I get an out-patient physiotherapy session reimbursed on Bronze?",
+    "answer": "The out-patient benefit (OPD rider) is not available on the Bronze plan [3]. The sources do not state whether out-patient physiotherapy sessions specifically can be reimbursed."
+  },
+  {
+    "id": "Q29",
+    "kind": "trap_archived",
+    "mode": 1,
+    "mode_name": "missing_content",
+    "evidence": "gold answer content not found in the relevant documents",
+    "question": "How many days do I have to respond to a query Aurora raises on my claim?",
+    "answer": "For general claims, you have 45 days from the date of the query to submit your response [1][3]. For Aurora Motor Insurance claims, the deadline to respond to an Aurora query is 30 days from the date of the query [5]."
+  },
+  {
+    "id": "Q32",
+    "kind": "aggregation",
+    "mode": 1,
+    "mode_name": "missing_content",
+    "evidence": "gold answer content not found in the relevant documents",
+    "question": "Which plans have no co-payment?",
+    "answer": "The Aurora Gold plan has no co-payment (nil) at all ages [1]. Additionally, the Aurora Silver plan has no co-payment when the eldest insured member is below age 60 [2]."
+  },
+  {
+    "id": "Q34",
+    "kind": "aggregation",
+    "mode": 1,
+    "mode_name": "missing_content",
+    "evidence": "gold answer content not found in the relevant documents",
+    "question": "Which plan should I buy if I want no room-rent sub-limit and cover for my parents-in-law?",
+    "answer": "Gold removes room-rent and ICU sub-limits [3], and Aurora Top-Up and Super Top-Up plans also have no room-rent sub-limit [2]. While dependent parents-in-law can be covered under certain plan tiers [1], the sources do not state the specific plan names corresponding to the table columns that allow par"
+  },
+  {
+    "id": "Q35",
+    "kind": "aggregation",
+    "mode": 1,
+    "mode_name": "missing_content",
+    "evidence": "gold answer content not found in the relevant documents",
+    "question": "List everything that is excluded relating to dental treatment.",
+    "answer": "Dental treatment and oral surgery are excluded under permanent exclusions, unless necessitated by an accidental injury requiring hospitalisation [1][3]. Additionally, out-patient dental work is specified as not covered by any plan [2]."
+  },
+  {
+    "id": "Q37",
+    "kind": "unanswerable",
+    "mode": 1,
+    "mode_name": "missing_content",
+    "evidence": "gold answer content not found in the relevant documents",
+    "question": "Does Aurora cover treatment in Singapore, and up to what limit?",
+    "answer": "I don't have enough information in the provided sources to answer that."
+  },
+  {
+    "id": "Q44",
+    "kind": "paraphrase",
+    "mode": 1,
+    "mode_name": "missing_content",
+    "evidence": "gold answer content not found in the relevant documents",
+    "question": "AUR-HI-SIL-2026 — what are the sum insured options?",
+    "answer": "Product UIN AUR-HI-SIL-2026 corresponds to Aurora Silver, which is effective 1 April 2026 [2]. The sources do not state the sum insured options for this plan."
+  }
+]

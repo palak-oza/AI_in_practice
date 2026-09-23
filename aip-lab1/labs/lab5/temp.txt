@@ -1,0 +1,25 @@
+
+saved -> C:\Users\palal oza\Desktop\Plaksha\AI-in-Practice-Lab-main\aip-lab1\reppython labs/lab5/diagnose.py --input reports/lab4.json\palal oza\Desktop\Plaksha\AI-in-Practice-Lab-main\aip-lab1> 
+10 failures out of 45
+
+  Q04   missing_content      gold answer content not found in the relevant documents
+  Q11   missing_content      gold answer content not found in the relevant documents
+  Q20   missing_content      gold answer content not found in the relevant documents
+  Q23   missing_content      gold answer content not found in the relevant documents
+  Q29   missing_content      gold answer content not found in the relevant documents
+  Q32   missing_content      gold answer content not found in the relevant documents
+  Q34   missing_content      gold answer content not found in the relevant documents
+  Q35   missing_content      gold answer content not found in the relevant documents
+  Q37   missing_content      gold answer content not found in the relevant documents
+  Q44   missing_content      gold answer content not found in the relevant documents
+
+failure mode          n    share   cumulative
+missing_content       10   100.0%   100.0%  ██████████████████████████████
+
+Cases marked needs_human_check are Part A2. Open them.
+
+saved -> C:\Users\palal oza\Desktop\Plaksha\AI-in-Practice-Lab-main\aip-lab1\reports\lab5_diagnosis.json
+(.venv) PS C:\Users\palal oza\Desktop\Plaksha\AI-in-Practice-Lab-main\aip-lab1> 
+
+
+
