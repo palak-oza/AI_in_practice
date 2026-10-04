@@ -12,7 +12,7 @@
     "n_citations": 3,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 17.932800110429525,
+    "latency_ms": 14.3716000020504,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -41,7 +41,7 @@
     "n_citations": 3,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 9.414199972525239,
+    "latency_ms": 11.261500010732561,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -70,7 +70,7 @@
     "n_citations": 3,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 10.18030010163784,
+    "latency_ms": 12.265499972272664,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -99,7 +99,7 @@
     "n_citations": 0,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 10.817200178280473,
+    "latency_ms": 12.308300007134676,
     "faithfulness": 1,
     "correctness": 0,
     "retrieved": [
@@ -112,8 +112,7 @@
     "relevant": [
       "pre-existing-conditions"
     ],
-    "gold_answer": "36 months of continuous coverage. A rider can reduce it to 24 or 12 months if bought at inception or first renewal.",
-    "failure_mode": 2
+    "gold_answer": "36 months of continuous coverage. A rider can reduce it to 24 or 12 months if bought at inception or first renewal."
   },
   {
     "id": "Q05",
@@ -128,7 +127,7 @@
     "n_citations": 1,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 10.229300009086728,
+    "latency_ms": 11.902099999133497,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -156,7 +155,7 @@
     "n_citations": 1,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 10.404299944639206,
+    "latency_ms": 10.736300027929246,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -184,7 +183,7 @@
     "n_citations": 3,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 11.794400168582797,
+    "latency_ms": 10.589200013782829,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -213,7 +212,7 @@
     "n_citations": 1,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 15.257499879226089,
+    "latency_ms": 11.949299951083958,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -241,7 +240,7 @@
     "n_citations": 1,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 9.170399978756905,
+    "latency_ms": 12.203000020235777,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -269,7 +268,7 @@
     "n_citations": 2,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 8.955599972978234,
+    "latency_ms": 10.040599969215691,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -297,7 +296,7 @@
     "n_citations": 5,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 9.573300136253238,
+    "latency_ms": 14.910000027157366,
     "faithfulness": 1,
     "correctness": 1,
     "retrieved": [
@@ -312,8 +311,7 @@
       "plan-silver",
       "claims-process"
     ],
-    "gold_answer": "Rs 5,000 per hospitalisation for road ambulance on all plans. Gold and Platinum additionally cover air ambulance up to Rs 2,50,000 per year within India on prior authorisation.",
-    "failure_mode": 6
+    "gold_answer": "Rs 5,000 per hospitalisation for road ambulance on all plans. Gold and Platinum additionally cover air ambulance up to Rs 2,50,000 per year within India on prior authorisation."
   },
   {
     "id": "Q12",
@@ -328,7 +326,7 @@
     "n_citations": 1,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 9.376300033181906,
+    "latency_ms": 13.724000018555671,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -356,7 +354,7 @@
     "n_citations": 5,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 9.693400003015995,
+    "latency_ms": 14.471600006800145,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -384,7 +382,7 @@
     "n_citations": 1,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 9.498100029304624,
+    "latency_ms": 12.313299986999482,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -412,7 +410,7 @@
     "n_citations": 2,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 19.564799964427948,
+    "latency_ms": 9.858799981884658,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -440,7 +438,7 @@
     "n_citations": 2,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 11.225400026887655,
+    "latency_ms": 10.25270001264289,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -469,7 +467,7 @@
     "n_citations": 2,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 10.482599958777428,
+    "latency_ms": 10.112899995874614,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -497,7 +495,7 @@
     "n_citations": 2,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 10.553099913522601,
+    "latency_ms": 11.191500001586974,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -525,7 +523,7 @@
     "n_citations": 3,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 9.629399981349707,
+    "latency_ms": 11.466600000858307,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -554,7 +552,7 @@
     "n_citations": 3,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 9.913699934259057,
+    "latency_ms": 9.875699994154274,
     "faithfulness": 1,
     "correctness": 1,
     "retrieved": [
@@ -570,8 +568,7 @@
       "plan-bronze",
       "plans-overview"
     ],
-    "gold_answer": "Dependent parents can be added on Silver (at extra premium), Gold and Platinum, but not on Bronze. Premium is set by the eldest member's age, and on Silver a 10% co-payment applies to every claim once the eldest insured is above 60. Aurora must present a separate senior-citizen policy as an alternative in writing.",
-    "failure_mode": 2
+    "gold_answer": "Dependent parents can be added on Silver (at extra premium), Gold and Platinum, but not on Bronze. Premium is set by the eldest member's age, and on Silver a 10% co-payment applies to every claim once the eldest insured is above 60. Aurora must present a separate senior-citizen policy as an alternative in writing."
   },
   {
     "id": "Q21",
@@ -586,7 +583,7 @@
     "n_citations": 5,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 9.890800109133124,
+    "latency_ms": 9.240500046871603,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -615,7 +612,7 @@
     "n_citations": 3,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 9.237600024789572,
+    "latency_ms": 10.28230000520125,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -644,7 +641,7 @@
     "n_citations": 1,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 9.392400039359927,
+    "latency_ms": 9.676599991507828,
     "faithfulness": 1,
     "correctness": 1,
     "retrieved": [
@@ -658,8 +655,7 @@
       "outpatient-and-wellness",
       "plan-bronze"
     ],
-    "gold_answer": "No. Out-patient treatment is not covered under any base plan, and the OPD rider is not available on Bronze.",
-    "failure_mode": 6
+    "gold_answer": "No. Out-patient treatment is not covered under any base plan, and the OPD rider is not available on Bronze."
   },
   {
     "id": "Q24",
@@ -674,7 +670,7 @@
     "n_citations": 2,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 9.20680002309382,
+    "latency_ms": 9.529999981168658,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -703,7 +699,7 @@
     "n_citations": 1,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 10.242699878290296,
+    "latency_ms": 9.727999975439161,
     "faithfulness": 0,
     "correctness": 2,
     "retrieved": [
@@ -732,7 +728,7 @@
     "n_citations": 4,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 10.12380002066493,
+    "latency_ms": 13.928800006397069,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -762,7 +758,7 @@
     "n_citations": 4,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 10.13569999486208,
+    "latency_ms": 13.301400002092123,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -791,7 +787,7 @@
     "n_citations": 5,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 10.086700087413192,
+    "latency_ms": 13.448300014715642,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -820,7 +816,7 @@
     "n_citations": 3,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 9.596299845725298,
+    "latency_ms": 13.894199975766242,
     "faithfulness": 1,
     "correctness": 0,
     "retrieved": [
@@ -833,8 +829,7 @@
     "relevant": [
       "claims-timelines"
     ],
-    "gold_answer": "45 days from the date of the query, under the rules effective 1 April 2026. (The archived 2024 document says 30 days and must not be quoted for current policies.)",
-    "failure_mode": 2
+    "gold_answer": "45 days from the date of the query, under the rules effective 1 April 2026. (The archived 2024 document says 30 days and must not be quoted for current policies.)"
   },
   {
     "id": "Q30",
@@ -849,7 +844,7 @@
     "n_citations": 3,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 16.39809994958341,
+    "latency_ms": 22.239799960516393,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -878,7 +873,7 @@
     "n_citations": 3,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 10.031600017100573,
+    "latency_ms": 12.440000020433217,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -907,7 +902,7 @@
     "n_citations": 2,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 11.077099945396185,
+    "latency_ms": 10.56690001860261,
     "faithfulness": 1,
     "correctness": 1,
     "retrieved": [
@@ -921,8 +916,7 @@
       "plans-overview",
       "plan-gold"
     ],
-    "gold_answer": "Gold and Platinum have nil co-payment at all ages. Bronze applies 20% and Silver 10% where the eldest insured is above 60.",
-    "failure_mode": 6
+    "gold_answer": "Gold and Platinum have nil co-payment at all ages. Bronze applies 20% and Silver 10% where the eldest insured is above 60."
   },
   {
     "id": "Q33",
@@ -937,7 +931,7 @@
     "n_citations": 2,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 13.798600062727928,
+    "latency_ms": 12.320499983616173,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -965,7 +959,7 @@
     "n_citations": 4,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 11.592900147661567,
+    "latency_ms": 10.054599959403276,
     "faithfulness": 1,
     "correctness": 0,
     "retrieved": [
@@ -980,8 +974,7 @@
       "plan-gold",
       "dependents-and-family-floater"
     ],
-    "gold_answer": "Gold (or Platinum). Gold removes room-rent and ICU sub-limits and is the lowest tier that permits dependent parents-in-law.",
-    "failure_mode": 6
+    "gold_answer": "Gold (or Platinum). Gold removes room-rent and ICU sub-limits and is the lowest tier that permits dependent parents-in-law."
   },
   {
     "id": "Q35",
@@ -996,7 +989,7 @@
     "n_citations": 2,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 10.422899853438139,
+    "latency_ms": 11.974200024269521,
     "faithfulness": 1,
     "correctness": 1,
     "retrieved": [
@@ -1010,8 +1003,7 @@
       "exclusions",
       "outpatient-and-wellness"
     ],
-    "gold_answer": "Dental treatment and oral surgery are excluded unless necessitated by accidental injury requiring hospitalisation. One dental check-up and cleaning per year is covered under the optional OPD rider.",
-    "failure_mode": 6
+    "gold_answer": "Dental treatment and oral surgery are excluded unless necessitated by accidental injury requiring hospitalisation. One dental check-up and cleaning per year is covered under the optional OPD rider."
   },
   {
     "id": "Q36",
@@ -1026,7 +1018,7 @@
     "n_citations": 0,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 9.671499952673912,
+    "latency_ms": 17.50929997069761,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -1052,7 +1044,7 @@
     "n_citations": 1,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 19237.059799954295,
+    "latency_ms": 15.043099992908537,
     "faithfulness": 0,
     "correctness": 2,
     "retrieved": [
@@ -1081,7 +1073,7 @@
     "n_citations": 0,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 14.977799961343408,
+    "latency_ms": 10.261100018396974,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -1107,7 +1099,7 @@
     "n_citations": 0,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 11.914299800992012,
+    "latency_ms": 9.397899964824319,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -1133,7 +1125,7 @@
     "n_citations": 0,
     "repaired": true,
     "truncated": true,
-    "latency_ms": 11.587199987843633,
+    "latency_ms": 9.498400031588972,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -1161,7 +1153,7 @@
     "n_citations": 4,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 12.626499868929386,
+    "latency_ms": 10.45570004498586,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -1189,7 +1181,7 @@
     "n_citations": 3,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 10.667200200259686,
+    "latency_ms": 9.507400041911751,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -1218,7 +1210,7 @@
     "n_citations": 2,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 12.067500036209822,
+    "latency_ms": 10.588099947199225,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [
@@ -1247,7 +1239,7 @@
     "n_citations": 0,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 11.832799995318055,
+    "latency_ms": 11.151499988045543,
     "faithfulness": 1,
     "correctness": 0,
     "retrieved": [
@@ -1260,8 +1252,7 @@
     "relevant": [
       "plan-silver"
     ],
-    "gold_answer": "Rs 5,00,000 or Rs 10,00,000.",
-    "failure_mode": 6
+    "gold_answer": "Rs 5,00,000 or Rs 10,00,000."
   },
   {
     "id": "Q45",
@@ -1276,7 +1267,7 @@
     "n_citations": 1,
     "repaired": false,
     "truncated": false,
-    "latency_ms": 13.794400030747056,
+    "latency_ms": 18.56299996143207,
     "faithfulness": 1,
     "correctness": 2,
     "retrieved": [

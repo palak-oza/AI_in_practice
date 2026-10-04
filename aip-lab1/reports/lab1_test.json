@@ -1,33 +1,33 @@
 {
   "name": "lab1-c-test",
-  "started_at": "2026-09-10 19:33:28",
+  "started_at": "2026-10-05 00:01:44",
   "n": 120,
   "aggregate": {
-    "field.category": 0.8416666666666667,
+    "field.category": 0.9166666666666666,
     "field.contains_pii": 1.0,
-    "field.escalate": 0.875,
-    "field.language": 0.9916666666666667,
+    "field.escalate": 0.8916666666666667,
+    "field.language": 1.0,
     "field.policy_number": 1.0,
-    "field.product": 0.925,
-    "field.sentiment": 0.8,
-    "field.urgency": 0.5666666666666667,
-    "field_accuracy": 0.875,
-    "needs_review": 0.11666666666666667,
-    "record_accuracy": 0.4583333333333333,
+    "field.product": 1.0,
+    "field.sentiment": 0.8333333333333334,
+    "field.urgency": 0.6166666666666667,
+    "field_accuracy": 0.9072916666666667,
+    "needs_review": 0.0,
+    "record_accuracy": 0.5083333333333333,
     "schema_valid": 1.0,
     "error_rate": 0.0
   },
   "budget": {
     "label": "lab1-c-test",
-    "calls": 106,
-    "cached_calls": 0,
-    "prompt_tokens": 144284,
-    "completion_tokens": 9461,
-    "cost_usd": 0.066938,
+    "calls": 120,
+    "cached_calls": 120,
+    "prompt_tokens": 163690,
+    "completion_tokens": 10789,
+    "cost_usd": 0.0,
     "unpriced_calls": 0,
     "unpriced_models": [],
-    "latency_p50_ms": 12168.8,
-    "latency_p95_ms": 50866.4
+    "latency_p50_ms": 0.0,
+    "latency_p95_ms": 0.0
   },
   "results": [
     {
@@ -47,7 +47,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 16240.7,
+      "latency_ms": 23.4,
       "output": {
         "evidence": "Please add my spouse to policy my policy.",
         "category": "policy_change",
@@ -79,7 +79,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 48375.8,
+      "latency_ms": 35.2,
       "output": {
         "evidence": "Can you confirm the restoration benefit is still available this year on AUR-2167410?",
         "category": "information",
@@ -98,8 +98,8 @@
       "id": "T0049",
       "metrics": {
         "field.category": 1.0,
-        "field.urgency": 0.0,
-        "field.sentiment": 1.0,
+        "field.urgency": 1.0,
+        "field.sentiment": 0.0,
         "field.policy_number": 1.0,
         "field.product": 1.0,
         "field.escalate": 1.0,
@@ -111,12 +111,12 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 17038.4,
+      "latency_ms": 39.0,
       "output": {
         "evidence": "The Aurora app crashes every time I try to upload a document for AUR-7089616.",
         "category": "technical",
-        "urgency": 3,
-        "sentiment": "frustrated",
+        "urgency": 2,
+        "sentiment": "neutral",
         "product": "gold",
         "language": "en",
         "needs_human_review": false,
@@ -143,7 +143,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 51038.7,
+      "latency_ms": 43.5,
       "output": {
         "evidence": "How do I change the registered mobile number and email on policy AUR-8471271?",
         "category": "policy_change",
@@ -163,24 +163,24 @@
       "metrics": {
         "field.category": 1.0,
         "field.urgency": 0.0,
-        "field.sentiment": 1.0,
+        "field.sentiment": 0.0,
         "field.policy_number": 1.0,
         "field.product": 1.0,
         "field.escalate": 1.0,
         "field.contains_pii": 1.0,
         "field.language": 1.0,
-        "field_accuracy": 0.875,
+        "field_accuracy": 0.75,
         "record_accuracy": 0.0,
         "schema_valid": 1.0,
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 1394.1,
+      "latency_ms": 27.4,
       "output": {
-        "evidence": "Kripya add my mother as a dependent on my Aurora Bronze policy.",
+        "evidence": "Kripya add my mother as a dependent on my Aurora Bronze policy. She is 63. What will the premium impact be? Jaldi karo please.",
         "category": "policy_change",
         "urgency": 3,
-        "sentiment": "neutral",
+        "sentiment": "frustrated",
         "product": "bronze",
         "language": "hi-en",
         "needs_human_review": false,
@@ -207,7 +207,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 1741.9,
+      "latency_ms": 23.8,
       "output": {
         "evidence": "How do I submit the post-hospitalisation bills for AUR-8548571?",
         "category": "claims",
@@ -226,8 +226,8 @@
       "id": "T0177",
       "metrics": {
         "field.category": 1.0,
-        "field.urgency": 1.0,
-        "field.sentiment": 0.0,
+        "field.urgency": 0.0,
+        "field.sentiment": 1.0,
         "field.policy_number": 1.0,
         "field.product": 1.0,
         "field.escalate": 1.0,
@@ -239,12 +239,12 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 2065.9,
+      "latency_ms": 22.6,
       "output": {
         "evidence": "The Aurora app crashes every time I try to upload a document for AUR-1566695.",
         "category": "technical",
-        "urgency": 2,
-        "sentiment": "neutral",
+        "urgency": 3,
+        "sentiment": "frustrated",
         "product": "silver",
         "language": "en",
         "needs_human_review": false,
@@ -271,11 +271,11 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 33889.9,
+      "latency_ms": 21.6,
       "output": {
         "evidence": "I want to upgrade from my current plan to a higher sum insured on AUR-1710478 at renewal.",
         "category": "policy_change",
-        "urgency": 2,
+        "urgency": 1,
         "sentiment": "neutral",
         "product": "unknown",
         "language": "en",
@@ -303,7 +303,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 220170.7,
+      "latency_ms": 23.2,
       "output": {
         "evidence": "The grievance I raised 11 days ago on AUR-4870006 was closed without anyone contacting me.",
         "category": "complaint",
@@ -335,7 +335,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 1744.9,
+      "latency_ms": 18.7,
       "output": {
         "evidence": "Please ADD MY MOTHER AS a dependent on AUR-1276614.",
         "category": "policy_change",
@@ -367,7 +367,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 56415.2,
+      "latency_ms": 20.2,
       "output": {
         "evidence": "Is teleconsultation included in my plan or do I need the OPD rider?",
         "category": "information",
@@ -385,25 +385,25 @@
     {
       "id": "T0093",
       "metrics": {
-        "field.category": 1.0,
-        "field.urgency": 1.0,
+        "field.category": 0.0,
+        "field.urgency": 0.0,
         "field.sentiment": 1.0,
         "field.policy_number": 1.0,
         "field.product": 1.0,
         "field.escalate": 1.0,
         "field.contains_pii": 1.0,
         "field.language": 1.0,
-        "field_accuracy": 1.0,
-        "record_accuracy": 1.0,
+        "field_accuracy": 0.75,
+        "record_accuracy": 0.0,
         "schema_valid": 1.0,
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 3150.1,
+      "latency_ms": 20.0,
       "output": {
-        "evidence": "Just wanted to confirm whether my no-claim bonus is affected by this claim.",
-        "category": "information",
-        "urgency": 1,
+        "evidence": "Thanks for settling my claim on AUR-3707429 so quickly.",
+        "category": "claims",
+        "urgency": 2,
         "sentiment": "satisfied",
         "product": "platinum",
         "language": "en",
@@ -431,7 +431,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 52846.4,
+      "latency_ms": 21.1,
       "output": {
         "evidence": "What is proportionate deduction and why does it apply to me?",
         "category": "claims",
@@ -463,7 +463,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 35759.4,
+      "latency_ms": 20.2,
       "output": {
         "evidence": "You have REJECTED my claim on AUR-8183618 without giving any clause.",
         "category": "claims",
@@ -495,7 +495,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 41468.7,
+      "latency_ms": 19.8,
       "output": {
         "evidence": "THIS IS THE THIRD TIME I am writing about the double debit on AUR-8245978.",
         "category": "billing",
@@ -527,7 +527,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 50278.9,
+      "latency_ms": 21.0,
       "output": {
         "evidence": "Does the policy cover AYUSH treatment at a government hospital?",
         "category": "information",
@@ -559,9 +559,9 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 28608.1,
+      "latency_ms": 20.5,
       "output": {
-        "evidence": "I cannot find it in the app.",
+        "evidence": "Where can I download my e-card for policy AUR-1063929?",
         "category": "technical",
         "urgency": 2,
         "sentiment": "neutral",
@@ -591,7 +591,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 93657.8,
+      "latency_ms": 20.9,
       "output": {
         "evidence": "I cannot reset my portal password for my policy.",
         "category": "technical",
@@ -623,7 +623,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 51468.6,
+      "latency_ms": 21.4,
       "output": {
         "evidence": "Does the policy cover AYUSH treatment at a government hospital?",
         "category": "information",
@@ -655,7 +655,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 142543.3,
+      "latency_ms": 20.6,
       "output": {
         "evidence": "I cannot reset my portal password for AUR-4561733.",
         "category": "technical",
@@ -687,7 +687,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 33702.2,
+      "latency_ms": 19.9,
       "output": {
         "evidence": "How do I change the registered mobile number and email on policy AUR-8892506?",
         "category": "policy_change",
@@ -719,9 +719,9 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 83048.1,
+      "latency_ms": 24.1,
       "output": {
-        "evidence": "I cannot reset my portal password for AUR-7003265.",
+        "evidence": "I cannot reset my portal password for AUR-7003265. The OTP never arrives on my registered number.",
         "category": "technical",
         "urgency": 2,
         "sentiment": "neutral",
@@ -751,7 +751,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 97529.0,
+      "latency_ms": 25.0,
       "output": {
         "evidence": "The network hospital refused cashless saying you have not settled their dues.",
         "category": "claims",
@@ -783,7 +783,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 83518.7,
+      "latency_ms": 25.4,
       "output": {
         "evidence": "The grievance I raised 14 days ago on AUR-1352610 was closed without anyone contacting me.",
         "category": "complaint",
@@ -815,7 +815,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 54578.7,
+      "latency_ms": 26.1,
       "output": {
         "evidence": "Please add my spouse to poilcy AUR-7092757.",
         "category": "policy_change",
@@ -847,7 +847,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 18995.5,
+      "latency_ms": 22.4,
       "output": {
         "evidence": "Is teleconsultation included in my plan or do I need teh OPD rider?",
         "category": "information",
@@ -879,7 +879,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 85554.8,
+      "latency_ms": 21.1,
       "output": {
         "evidence": "THIS IS THE THIRD TIME I am writing about teh double debit on AUR-8715421.",
         "category": "billing",
@@ -911,7 +911,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 124831.9,
+      "latency_ms": 21.1,
       "output": {
         "evidence": "My father is admitted in ICU right now and the hospital says cashless is DENIED on AUR-8933242.",
         "category": "claims",
@@ -943,7 +943,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 18371.7,
+      "latency_ms": 20.2,
       "output": {
         "evidence": "Could you send me the 80D certificate for policy my Aurora Gold policy for the last financial year?",
         "category": "billing",
@@ -975,7 +975,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 36249.8,
+      "latency_ms": 19.6,
       "output": {
         "evidence": "What are the instalment options available on my policy my policy?",
         "category": "billing",
@@ -1007,7 +1007,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 27959.9,
+      "latency_ms": 19.8,
       "output": {
         "evidence": "Your portal has been down all morning and I am standing at the hospital insurance desk trying to show my policy my policy.",
         "category": "technical",
@@ -1039,7 +1039,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 25700.9,
+      "latency_ms": 20.6,
       "output": {
         "evidence": "My father is admitted in ICU right now and the hospital says cashless is DENIED on my Aurora Platinum policy.",
         "category": "claims",
@@ -1071,7 +1071,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 98449.3,
+      "latency_ms": 20.9,
       "output": {
         "evidence": "Claim reference CLM-63000 on policy AUR-1580000 has been pending for 11 days.",
         "category": "claims",
@@ -1103,7 +1103,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 25805.3,
+      "latency_ms": 21.8,
       "output": {
         "evidence": "How do I submit the post-hospitalisation bills for AUR-5174977?",
         "category": "claims",
@@ -1135,7 +1135,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 24576.9,
+      "latency_ms": 23.2,
       "output": {
         "evidence": "What is the waiting period for cataract surgery?",
         "category": "information",
@@ -1167,7 +1167,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 21512.2,
+      "latency_ms": 22.0,
       "output": {
         "evidence": "Please add my newborn daughter to my policy.",
         "category": "policy_change",
@@ -1199,7 +1199,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 2695.4,
+      "latency_ms": 22.0,
       "output": {
         "evidence": "The network hospital refused CASHLESS SAYING YOU HAVE not settled their dues.",
         "category": "claims",
@@ -1231,7 +1231,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 20860.2,
+      "latency_ms": 22.9,
       "output": {
         "evidence": "Your agent mis-sold me this policy.",
         "category": "complaint",
@@ -1263,7 +1263,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 35327.9,
+      "latency_ms": 21.8,
       "output": {
         "evidence": "Can you confirm the restoration benefit is still available this year on my Aurora Gold policy?",
         "category": "information",
@@ -1295,7 +1295,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 1832.0,
+      "latency_ms": 21.9,
       "output": {
         "evidence": "The auto-debit mandate for AUR-3260139 failed again even though there was balance in the account.",
         "category": "billing",
@@ -1327,7 +1327,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 1856.0,
+      "latency_ms": 23.0,
       "output": {
         "evidence": "Is teleconsultation included in my plan or do I need THE OPD RIDER?",
         "category": "information",
@@ -1359,7 +1359,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 9214.3,
+      "latency_ms": 22.0,
       "output": {
         "evidence": "Your portal has been down all morning and I am standing at teh hospital insurance desk TRYING TO SHOW MY Aurora Silver poilcy my policy.",
         "category": "technical",
@@ -1391,7 +1391,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 15575.5,
+      "latency_ms": 21.6,
       "output": {
         "evidence": "I cannot find it in the app.",
         "category": "technical",
@@ -1423,7 +1423,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 7659.0,
+      "latency_ms": 23.4,
       "output": {
         "evidence": "Claim reference CLM-4200 on policy AUR-7530057 has been pending for 30 days.",
         "category": "claims",
@@ -1455,7 +1455,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 7606.8,
+      "latency_ms": 21.8,
       "output": {
         "evidence": "How do I change teh registered mobile number and email on poilcy AUR-7276919?",
         "category": "policy_change",
@@ -1487,9 +1487,9 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 1827.3,
+      "latency_ms": 21.7,
       "output": {
-        "evidence": "I cannot find it in the app.",
+        "evidence": "Where can I download my e-card for policy my Aurora Bronze policy? I cannot find it in the app.",
         "category": "technical",
         "urgency": 2,
         "sentiment": "neutral",
@@ -1507,24 +1507,24 @@
       "metrics": {
         "field.category": 1.0,
         "field.urgency": 1.0,
-        "field.sentiment": 1.0,
+        "field.sentiment": 0.0,
         "field.policy_number": 1.0,
         "field.product": 1.0,
         "field.escalate": 1.0,
         "field.contains_pii": 1.0,
         "field.language": 1.0,
-        "field_accuracy": 1.0,
-        "record_accuracy": 1.0,
+        "field_accuracy": 0.875,
+        "record_accuracy": 0.0,
         "schema_valid": 1.0,
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 71169.5,
+      "latency_ms": 22.8,
       "output": {
-        "evidence": "Please add my mother as a dependent on AUR-4171174.",
+        "evidence": "Please add my mother as a dependent on AUR-4171174. She is 63. What will the premium impact be?",
         "category": "policy_change",
         "urgency": 2,
-        "sentiment": "neutral",
+        "sentiment": "angry",
         "product": "silver",
         "language": "en",
         "needs_human_review": false,
@@ -1538,24 +1538,24 @@
       "id": "T0163",
       "metrics": {
         "field.category": 1.0,
-        "field.urgency": 0.0,
+        "field.urgency": 1.0,
         "field.sentiment": 1.0,
         "field.policy_number": 1.0,
         "field.product": 1.0,
         "field.escalate": 1.0,
         "field.contains_pii": 1.0,
         "field.language": 1.0,
-        "field_accuracy": 0.875,
-        "record_accuracy": 0.0,
+        "field_accuracy": 1.0,
+        "record_accuracy": 1.0,
         "schema_valid": 1.0,
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 35113.9,
+      "latency_ms": 21.6,
       "output": {
-        "evidence": "What are the instalment options available on my policy AUR-9317842?",
+        "evidence": "What are the instalment options available on my policy",
         "category": "billing",
-        "urgency": 2,
+        "urgency": 1,
         "sentiment": "neutral",
         "product": "unknown",
         "language": "en",
@@ -1583,7 +1583,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 1696.0,
+      "latency_ms": 22.5,
       "output": {
         "evidence": "Is teleconsultation included in my plan or do I need teh OPD rider?",
         "category": "information",
@@ -1615,7 +1615,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 24478.8,
+      "latency_ms": 23.1,
       "output": {
         "evidence": "I cannot reset my portal password for AUR-2848074.",
         "category": "technical",
@@ -1647,7 +1647,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 30516.3,
+      "latency_ms": 22.0,
       "output": {
         "evidence": "The grievance I raised 5 days ago on AUR-2012575 was closed without anyone contacting me.",
         "category": "complaint",
@@ -1679,7 +1679,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 1632.3,
+      "latency_ms": 21.4,
       "output": {
         "evidence": "You have REJECTED my claim on AUR-6014148 without giving any clause.",
         "category": "claims",
@@ -1711,11 +1711,11 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 1431.3,
+      "latency_ms": 21.3,
       "output": {
         "evidence": "I want to upgrade from my current plan to a higher sum insured on AUR-3224901 at renewal.",
         "category": "policy_change",
-        "urgency": 1,
+        "urgency": 2,
         "sentiment": "neutral",
         "product": "silver",
         "language": "en",
@@ -1743,7 +1743,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 15064.6,
+      "latency_ms": 19.9,
       "output": {
         "evidence": "The grievance I raised 21 days ago on AUR-4718001 was closed without anyone contacting me.",
         "category": "complaint",
@@ -1775,7 +1775,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 3687.5,
+      "latency_ms": 19.8,
       "output": {
         "evidence": "Claim reference CLM-41800 on policy AUR-1244968 has been pending for 14 days.",
         "category": "claims",
@@ -1807,7 +1807,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 40140.9,
+      "latency_ms": 19.9,
       "output": {
         "evidence": "The Aurora app CRASHES EVERY TIME I try to upload a document for my Aurora Bronze policy.",
         "category": "technical",
@@ -1839,7 +1839,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 33407.8,
+      "latency_ms": 19.7,
       "output": {
         "evidence": "Please add my spouse to poilcy AUR-4599601.",
         "category": "policy_change",
@@ -1871,7 +1871,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 16276.3,
+      "latency_ms": 20.0,
       "output": {
         "evidence": "The hospital locator on the app shows zero results for my city.",
         "category": "technical",
@@ -1903,7 +1903,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 43622.1,
+      "latency_ms": 21.0,
       "output": {
         "evidence": "The auto-debit mandate for AUR-7713837 failed again even though there was balance in the account.",
         "category": "billing",
@@ -1935,7 +1935,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 12114.4,
+      "latency_ms": 21.2,
       "output": {
         "evidence": "You have REJECTED my claim on AUR-4188167 without giving any clause.",
         "category": "claims",
@@ -1967,7 +1967,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 12572.5,
+      "latency_ms": 22.1,
       "output": {
         "evidence": "Your service is a disgrace and I am filing a complaint with the ombudsman.",
         "category": "complaint",
@@ -1999,7 +1999,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 50886.0,
+      "latency_ms": 24.4,
       "output": {
         "evidence": "Your agent mis-sold me this policy.",
         "category": "complaint",
@@ -2018,29 +2018,29 @@
       "id": "T0219",
       "metrics": {
         "field.category": 1.0,
-        "field.urgency": 1.0,
+        "field.urgency": 0.0,
         "field.sentiment": 1.0,
         "field.policy_number": 1.0,
-        "field.product": 0.0,
+        "field.product": 1.0,
         "field.escalate": 1.0,
         "field.contains_pii": 1.0,
-        "field.language": 0.0,
-        "field_accuracy": 0.75,
+        "field.language": 1.0,
+        "field_accuracy": 0.875,
         "record_accuracy": 0.0,
         "schema_valid": 1.0,
-        "needs_review": 1.0
+        "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 327595.5,
+      "latency_ms": 24.4,
       "output": {
-        "evidence": "",
+        "evidence": "What is the waiting period for cataract surgery?",
         "category": "information",
-        "urgency": 1,
+        "urgency": 2,
         "sentiment": "neutral",
-        "product": "unknown",
-        "language": "en",
-        "needs_human_review": true,
-        "review_reason": "APIConnectionError: litellm.APIConnectionError: GeminiException - [Errno 11001] getaddrinfo failed",
+        "product": "bronze",
+        "language": "hi-en",
+        "needs_human_review": false,
+        "review_reason": "",
         "policy_number": null,
         "contains_pii": true,
         "escalate": false
@@ -2063,7 +2063,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 1527.1,
+      "latency_ms": 25.2,
       "output": {
         "evidence": "Please add my newborn daughter to AUR-5862888.",
         "category": "policy_change",
@@ -2095,7 +2095,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 12873.9,
+      "latency_ms": 25.7,
       "output": {
         "evidence": "What are the instalment options available on my Aurora Bronze policy AUR-5672436?",
         "category": "billing",
@@ -2127,7 +2127,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 6491.0,
+      "latency_ms": 23.8,
       "output": {
         "evidence": "The network hospital refused cashless saying you have not settled their dues.",
         "category": "claims",
@@ -2159,11 +2159,11 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 1328.2,
+      "latency_ms": 22.2,
       "output": {
         "evidence": "Your agent mis-sold me this policy.",
         "category": "complaint",
-        "urgency": 3,
+        "urgency": 2,
         "sentiment": "angry",
         "product": "gold",
         "language": "hi-en",
@@ -2179,24 +2179,24 @@
       "metrics": {
         "field.category": 1.0,
         "field.urgency": 1.0,
-        "field.sentiment": 0.0,
+        "field.sentiment": 1.0,
         "field.policy_number": 1.0,
         "field.product": 1.0,
         "field.escalate": 1.0,
         "field.contains_pii": 1.0,
         "field.language": 1.0,
-        "field_accuracy": 0.875,
-        "record_accuracy": 0.0,
+        "field_accuracy": 1.0,
+        "record_accuracy": 1.0,
         "schema_valid": 1.0,
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 1640.0,
+      "latency_ms": 20.6,
       "output": {
         "evidence": "Can you confirm the RESTORATION BENEFIT IS STILL available this year on AUR-7895483?",
         "category": "information",
         "urgency": 1,
-        "sentiment": "neutral",
+        "sentiment": "satisfied",
         "product": "bronze",
         "language": "hi-en",
         "needs_human_review": false,
@@ -2210,24 +2210,24 @@
       "id": "T0018",
       "metrics": {
         "field.category": 1.0,
-        "field.urgency": 1.0,
+        "field.urgency": 0.0,
         "field.sentiment": 0.0,
         "field.policy_number": 1.0,
         "field.product": 1.0,
-        "field.escalate": 1.0,
+        "field.escalate": 0.0,
         "field.contains_pii": 1.0,
         "field.language": 1.0,
-        "field_accuracy": 0.875,
+        "field_accuracy": 0.625,
         "record_accuracy": 0.0,
         "schema_valid": 1.0,
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 1341.0,
+      "latency_ms": 19.3,
       "output": {
         "evidence": "I cannot reset my portal password for my Aurora Platinum policy.",
         "category": "technical",
-        "urgency": 3,
+        "urgency": 4,
         "sentiment": "frustrated",
         "product": "platinum",
         "language": "hi-en",
@@ -2235,7 +2235,7 @@
         "review_reason": "",
         "policy_number": null,
         "contains_pii": true,
-        "escalate": false
+        "escalate": true
       }
     },
     {
@@ -2255,7 +2255,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 5322.0,
+      "latency_ms": 19.3,
       "output": {
         "evidence": "I submitted a portability request 7 days ago and heard nothing.",
         "category": "policy_change",
@@ -2274,24 +2274,24 @@
       "id": "T0125",
       "metrics": {
         "field.category": 0.0,
-        "field.urgency": 0.0,
+        "field.urgency": 1.0,
         "field.sentiment": 1.0,
         "field.policy_number": 1.0,
         "field.product": 1.0,
         "field.escalate": 1.0,
         "field.contains_pii": 1.0,
         "field.language": 1.0,
-        "field_accuracy": 0.75,
+        "field_accuracy": 0.875,
         "record_accuracy": 0.0,
         "schema_valid": 1.0,
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 1463.1,
+      "latency_ms": 19.7,
       "output": {
         "evidence": "Just wanted to confirm whether my no-claim bonus is affected by this claim.",
         "category": "claims",
-        "urgency": 2,
+        "urgency": 1,
         "sentiment": "satisfied",
         "product": "silver",
         "language": "en",
@@ -2319,7 +2319,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 1504.5,
+      "latency_ms": 19.7,
       "output": {
         "evidence": "Can you confirm the restoration benefit is still available this year on AUR-3295586?",
         "category": "information",
@@ -2351,7 +2351,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 1429.7,
+      "latency_ms": 20.6,
       "output": {
         "evidence": "You have REJECTED my claim on AUR-9740552 without giving any clause.",
         "category": "claims",
@@ -2383,7 +2383,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 1558027.6,
+      "latency_ms": 21.3,
       "output": {
         "evidence": "The grievance I raised 30 days ago on AUR-2154933 WAS CLOSED WITHOUT anyone contacting me.",
         "category": "complaint",
@@ -2403,24 +2403,24 @@
       "metrics": {
         "field.category": 1.0,
         "field.urgency": 1.0,
-        "field.sentiment": 1.0,
+        "field.sentiment": 0.0,
         "field.policy_number": 1.0,
         "field.product": 1.0,
         "field.escalate": 1.0,
         "field.contains_pii": 1.0,
         "field.language": 1.0,
-        "field_accuracy": 1.0,
-        "record_accuracy": 1.0,
+        "field_accuracy": 0.875,
+        "record_accuracy": 0.0,
         "schema_valid": 1.0,
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 15257.3,
+      "latency_ms": 21.7,
       "output": {
         "evidence": "Just wanted to confirm whether my no-claim bonus is affected by this claim.",
         "category": "information",
         "urgency": 1,
-        "sentiment": "satisfied",
+        "sentiment": "neutral",
         "product": "platinum",
         "language": "hi-en",
         "needs_human_review": false,
@@ -2433,30 +2433,30 @@
     {
       "id": "T0072",
       "metrics": {
-        "field.category": 0.0,
+        "field.category": 1.0,
         "field.urgency": 0.0,
-        "field.sentiment": 0.0,
+        "field.sentiment": 1.0,
         "field.policy_number": 1.0,
-        "field.product": 0.0,
+        "field.product": 1.0,
         "field.escalate": 1.0,
         "field.contains_pii": 1.0,
         "field.language": 1.0,
-        "field_accuracy": 0.5,
+        "field_accuracy": 0.875,
         "record_accuracy": 0.0,
         "schema_valid": 1.0,
-        "needs_review": 1.0
+        "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 1539282.1,
+      "latency_ms": 22.6,
       "output": {
-        "evidence": "",
-        "category": "information",
-        "urgency": 1,
-        "sentiment": "neutral",
-        "product": "unknown",
+        "evidence": "My clam on AUR-9373880 was settled at Rs 41800 but teh hospital bill was much higher.",
+        "category": "claims",
+        "urgency": 2,
+        "sentiment": "frustrated",
+        "product": "bronze",
         "language": "en",
-        "needs_human_review": true,
-        "review_reason": "APIConnectionError: litellm.APIConnectionError: GeminiException - [Errno 11001] getaddrinfo failed",
+        "needs_human_review": false,
+        "review_reason": "",
         "policy_number": "AUR-9373880",
         "contains_pii": true,
         "escalate": false
@@ -2465,30 +2465,30 @@
     {
       "id": "T0083",
       "metrics": {
-        "field.category": 0.0,
-        "field.urgency": 0.0,
-        "field.sentiment": 0.0,
+        "field.category": 1.0,
+        "field.urgency": 1.0,
+        "field.sentiment": 1.0,
         "field.policy_number": 1.0,
-        "field.product": 0.0,
+        "field.product": 1.0,
         "field.escalate": 1.0,
         "field.contains_pii": 1.0,
         "field.language": 1.0,
-        "field_accuracy": 0.5,
-        "record_accuracy": 0.0,
+        "field_accuracy": 1.0,
+        "record_accuracy": 1.0,
         "schema_valid": 1.0,
-        "needs_review": 1.0
+        "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 1538707.7,
+      "latency_ms": 21.4,
       "output": {
-        "evidence": "",
-        "category": "information",
-        "urgency": 1,
-        "sentiment": "neutral",
-        "product": "unknown",
+        "evidence": "The hospital locator on the app shows zero results for my city.",
+        "category": "technical",
+        "urgency": 3,
+        "sentiment": "frustrated",
+        "product": "silver",
         "language": "en",
-        "needs_human_review": true,
-        "review_reason": "APIConnectionError: litellm.APIConnectionError: GeminiException - [Errno 11001] getaddrinfo failed",
+        "needs_human_review": false,
+        "review_reason": "",
         "policy_number": "AUR-6322910",
         "contains_pii": true,
         "escalate": false
@@ -2511,9 +2511,9 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 1276183.0,
+      "latency_ms": 20.3,
       "output": {
-        "evidence": "THIS IS THE THIRD TIME I am writing about the double debit on AUR-6053093. Rs 12400 taken twice",
+        "evidence": "THIS IS THE THIRD TIME I am writing about the double debit on AUR-6053093.",
         "category": "billing",
         "urgency": 5,
         "sentiment": "angry",
@@ -2543,7 +2543,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 5991.9,
+      "latency_ms": 20.4,
       "output": {
         "evidence": "Please add my newborn daughter to AUR-7582913.",
         "category": "policy_change",
@@ -2575,7 +2575,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 3536.3,
+      "latency_ms": 19.5,
       "output": {
         "evidence": "How do I submit the post-hospitalisation bills for AUR-6575967?",
         "category": "claims",
@@ -2607,7 +2607,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 3317.3,
+      "latency_ms": 19.6,
       "output": {
         "evidence": "How many wellness points do I currently have on AUR-5106404 and what discount does that give me?",
         "category": "information",
@@ -2639,7 +2639,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 1733.4,
+      "latency_ms": 20.5,
       "output": {
         "evidence": "Just wanted to confirm whether my no-claim bonus is affected by this claim.",
         "category": "claims",
@@ -2671,7 +2671,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 6277.7,
+      "latency_ms": 19.8,
       "output": {
         "evidence": "My father is admitted in ICU right now and the hospital says cashless is DENIED on AUR-7026311.",
         "category": "claims",
@@ -2703,7 +2703,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 1625.9,
+      "latency_ms": 20.5,
       "output": {
         "evidence": "My father is admitted in ICU right now and the hospital says cashless is DENIED on my Aurora Gold policy.",
         "category": "claims",
@@ -2735,7 +2735,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 1418.1,
+      "latency_ms": 20.7,
       "output": {
         "evidence": "The hospital locator on the app shows zero results for my city.",
         "category": "technical",
@@ -2767,9 +2767,9 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 3304.1,
+      "latency_ms": 20.0,
       "output": {
-        "evidence": "Your service is a disgrace and I am filing a complaint with the ombudsman.",
+        "evidence": "I have been on hold for over an hour, twice today.",
         "category": "complaint",
         "urgency": 5,
         "sentiment": "angry",
@@ -2799,7 +2799,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 12192.9,
+      "latency_ms": 20.5,
       "output": {
         "evidence": "The network hospital refused cashless saying you have not settled their dues.",
         "category": "claims",
@@ -2831,7 +2831,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 39273.4,
+      "latency_ms": 20.1,
       "output": {
         "evidence": "What documents do I need to submit for reimbursement of a day-care procedure under AUR-7167645?",
         "category": "claims",
@@ -2863,7 +2863,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 1345.6,
+      "latency_ms": 19.4,
       "output": {
         "evidence": "Your agent mis-sold me this policy.",
         "category": "complaint",
@@ -2895,7 +2895,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 39207.9,
+      "latency_ms": 19.4,
       "output": {
         "evidence": "Could you send me the 80D certificate for policy AUR-3454055 for the last financial year?",
         "category": "billing",
@@ -2927,7 +2927,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 2811.8,
+      "latency_ms": 19.9,
       "output": {
         "evidence": "I submitted a portability request 3 days ago and heard nothing.",
         "category": "policy_change",
@@ -2959,7 +2959,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 6711.9,
+      "latency_ms": 19.7,
       "output": {
         "evidence": "Just wanted to confirm whether my no-claim bonus is affected by this claim.",
         "category": "claims",
@@ -2977,62 +2977,62 @@
     {
       "id": "T0213",
       "metrics": {
-        "field.category": 0.0,
-        "field.urgency": 0.0,
-        "field.sentiment": 0.0,
+        "field.category": 1.0,
+        "field.urgency": 1.0,
+        "field.sentiment": 1.0,
         "field.policy_number": 1.0,
-        "field.product": 0.0,
-        "field.escalate": 0.0,
+        "field.product": 1.0,
+        "field.escalate": 1.0,
         "field.contains_pii": 1.0,
         "field.language": 1.0,
-        "field_accuracy": 0.375,
-        "record_accuracy": 0.0,
+        "field_accuracy": 1.0,
+        "record_accuracy": 1.0,
         "schema_valid": 1.0,
-        "needs_review": 1.0
+        "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 10258.4,
+      "latency_ms": 19.5,
       "output": {
-        "evidence": "",
-        "category": "information",
-        "urgency": 1,
-        "sentiment": "neutral",
-        "product": "unknown",
+        "evidence": "Your portal has been down all morning and I am standing at the HOSPITAL INSURANCE DESK TRYING to show my Aurora Platinum policy",
+        "category": "technical",
+        "urgency": 4,
+        "sentiment": "angry",
+        "product": "platinum",
         "language": "en",
-        "needs_human_review": true,
-        "review_reason": "RateLimitError: litellm.RateLimitError: litellm.RateLimitError: geminiException - {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limit",
+        "needs_human_review": false,
+        "review_reason": "",
         "policy_number": "AUR-4418874",
         "contains_pii": false,
-        "escalate": false
+        "escalate": true
       }
     },
     {
       "id": "T0148",
       "metrics": {
-        "field.category": 0.0,
+        "field.category": 1.0,
         "field.urgency": 1.0,
         "field.sentiment": 1.0,
         "field.policy_number": 1.0,
-        "field.product": 0.0,
+        "field.product": 1.0,
         "field.escalate": 1.0,
         "field.contains_pii": 1.0,
         "field.language": 1.0,
-        "field_accuracy": 0.75,
-        "record_accuracy": 0.0,
+        "field_accuracy": 1.0,
+        "record_accuracy": 1.0,
         "schema_valid": 1.0,
-        "needs_review": 1.0
+        "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 12332.8,
+      "latency_ms": 20.6,
       "output": {
-        "evidence": "",
-        "category": "information",
+        "evidence": "Where can I download my e-card for policy AUR-8926558?",
+        "category": "technical",
         "urgency": 1,
         "sentiment": "neutral",
-        "product": "unknown",
+        "product": "silver",
         "language": "en",
-        "needs_human_review": true,
-        "review_reason": "RateLimitError: litellm.RateLimitError: litellm.RateLimitError: geminiException - {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limit",
+        "needs_human_review": false,
+        "review_reason": "",
         "policy_number": "AUR-8926558",
         "contains_pii": true,
         "escalate": false
@@ -3041,30 +3041,30 @@
     {
       "id": "T0224",
       "metrics": {
-        "field.category": 0.0,
-        "field.urgency": 0.0,
+        "field.category": 1.0,
+        "field.urgency": 1.0,
         "field.sentiment": 0.0,
         "field.policy_number": 1.0,
         "field.product": 1.0,
         "field.escalate": 1.0,
         "field.contains_pii": 1.0,
         "field.language": 1.0,
-        "field_accuracy": 0.625,
+        "field_accuracy": 0.875,
         "record_accuracy": 0.0,
         "schema_valid": 1.0,
-        "needs_review": 1.0
+        "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 8691.9,
+      "latency_ms": 19.6,
       "output": {
-        "evidence": "",
-        "category": "information",
-        "urgency": 1,
+        "evidence": "My premium of Rs 26500 was debited twice this month from my account for policy AUR-8702603.",
+        "category": "billing",
+        "urgency": 3,
         "sentiment": "neutral",
         "product": "unknown",
         "language": "en",
-        "needs_human_review": true,
-        "review_reason": "RateLimitError: litellm.RateLimitError: litellm.RateLimitError: geminiException - {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limit",
+        "needs_human_review": false,
+        "review_reason": "",
         "policy_number": "AUR-8702603",
         "contains_pii": true,
         "escalate": false
@@ -3077,26 +3077,26 @@
         "field.urgency": 0.0,
         "field.sentiment": 1.0,
         "field.policy_number": 1.0,
-        "field.product": 0.0,
+        "field.product": 1.0,
         "field.escalate": 1.0,
         "field.contains_pii": 1.0,
         "field.language": 1.0,
-        "field_accuracy": 0.75,
+        "field_accuracy": 0.875,
         "record_accuracy": 0.0,
         "schema_valid": 1.0,
-        "needs_review": 1.0
+        "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 7860.2,
+      "latency_ms": 19.4,
       "output": {
-        "evidence": "",
+        "evidence": "How many wellness points do I currently have on AUR-8744767 and what discount does that give me?",
         "category": "information",
         "urgency": 1,
         "sentiment": "neutral",
-        "product": "unknown",
+        "product": "silver",
         "language": "en",
-        "needs_human_review": true,
-        "review_reason": "RateLimitError: litellm.RateLimitError: litellm.RateLimitError: geminiException - {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limit",
+        "needs_human_review": false,
+        "review_reason": "",
         "policy_number": "AUR-8744767",
         "contains_pii": true,
         "escalate": false
@@ -3109,26 +3109,26 @@
         "field.urgency": 0.0,
         "field.sentiment": 1.0,
         "field.policy_number": 1.0,
-        "field.product": 0.0,
+        "field.product": 1.0,
         "field.escalate": 1.0,
         "field.contains_pii": 1.0,
         "field.language": 1.0,
-        "field_accuracy": 0.75,
+        "field_accuracy": 0.875,
         "record_accuracy": 0.0,
         "schema_valid": 1.0,
-        "needs_review": 1.0
+        "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 10621.1,
+      "latency_ms": 20.0,
       "output": {
-        "evidence": "",
+        "evidence": "How many wellness points do I currently have on AUR-9243068 and what discount does that give me?",
         "category": "information",
         "urgency": 1,
         "sentiment": "neutral",
-        "product": "unknown",
+        "product": "platinum",
         "language": "en",
-        "needs_human_review": true,
-        "review_reason": "RateLimitError: litellm.RateLimitError: litellm.RateLimitError: geminiException - {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limit",
+        "needs_human_review": false,
+        "review_reason": "",
         "policy_number": "AUR-9243068",
         "contains_pii": false,
         "escalate": false
@@ -3137,30 +3137,30 @@
     {
       "id": "T0113",
       "metrics": {
-        "field.category": 0.0,
+        "field.category": 1.0,
         "field.urgency": 0.0,
         "field.sentiment": 0.0,
         "field.policy_number": 1.0,
-        "field.product": 0.0,
+        "field.product": 1.0,
         "field.escalate": 1.0,
         "field.contains_pii": 1.0,
         "field.language": 1.0,
-        "field_accuracy": 0.5,
+        "field_accuracy": 0.75,
         "record_accuracy": 0.0,
         "schema_valid": 1.0,
-        "needs_review": 1.0
+        "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 7721.9,
+      "latency_ms": 19.8,
       "output": {
-        "evidence": "",
-        "category": "information",
-        "urgency": 1,
+        "evidence": "The Aurora app crashes every time I try to upload a document for AUR-6127865.",
+        "category": "technical",
+        "urgency": 3,
         "sentiment": "neutral",
-        "product": "unknown",
+        "product": "gold",
         "language": "en",
-        "needs_human_review": true,
-        "review_reason": "RateLimitError: litellm.RateLimitError: litellm.RateLimitError: geminiException - {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limit",
+        "needs_human_review": false,
+        "review_reason": "",
         "policy_number": "AUR-6127865",
         "contains_pii": false,
         "escalate": false
@@ -3169,30 +3169,30 @@
     {
       "id": "T0096",
       "metrics": {
-        "field.category": 0.0,
-        "field.urgency": 0.0,
-        "field.sentiment": 0.0,
+        "field.category": 1.0,
+        "field.urgency": 1.0,
+        "field.sentiment": 1.0,
         "field.policy_number": 1.0,
         "field.product": 1.0,
         "field.escalate": 1.0,
         "field.contains_pii": 1.0,
         "field.language": 1.0,
-        "field_accuracy": 0.625,
-        "record_accuracy": 0.0,
+        "field_accuracy": 1.0,
+        "record_accuracy": 1.0,
         "schema_valid": 1.0,
-        "needs_review": 1.0
+        "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 8758.5,
+      "latency_ms": 19.8,
       "output": {
-        "evidence": "",
-        "category": "information",
-        "urgency": 1,
-        "sentiment": "neutral",
+        "evidence": "My premium of Rs 26500 was debited twice this month from my account for policy AUR-2291019.",
+        "category": "billing",
+        "urgency": 3,
+        "sentiment": "frustrated",
         "product": "unknown",
         "language": "en",
-        "needs_human_review": true,
-        "review_reason": "RateLimitError: litellm.RateLimitError: litellm.RateLimitError: geminiException - {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limit",
+        "needs_human_review": false,
+        "review_reason": "",
         "policy_number": "AUR-2291019",
         "contains_pii": true,
         "escalate": false
@@ -3201,62 +3201,62 @@
     {
       "id": "T0019",
       "metrics": {
-        "field.category": 0.0,
-        "field.urgency": 0.0,
-        "field.sentiment": 0.0,
+        "field.category": 1.0,
+        "field.urgency": 1.0,
+        "field.sentiment": 1.0,
         "field.policy_number": 1.0,
         "field.product": 1.0,
-        "field.escalate": 0.0,
+        "field.escalate": 1.0,
         "field.contains_pii": 1.0,
         "field.language": 1.0,
-        "field_accuracy": 0.5,
-        "record_accuracy": 0.0,
+        "field_accuracy": 1.0,
+        "record_accuracy": 1.0,
         "schema_valid": 1.0,
-        "needs_review": 1.0
+        "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 8538.5,
+      "latency_ms": 20.2,
       "output": {
-        "evidence": "",
-        "category": "information",
-        "urgency": 1,
-        "sentiment": "neutral",
+        "evidence": "The hospital locator on the app shows zero results for my city.",
+        "category": "technical",
+        "urgency": 4,
+        "sentiment": "frustrated",
         "product": "unknown",
         "language": "en",
-        "needs_human_review": true,
-        "review_reason": "RateLimitError: litellm.RateLimitError: litellm.RateLimitError: geminiException - {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limit",
+        "needs_human_review": false,
+        "review_reason": "",
         "policy_number": "AUR-8791605",
         "contains_pii": false,
-        "escalate": false
+        "escalate": true
       }
     },
     {
       "id": "T0160",
       "metrics": {
-        "field.category": 0.0,
-        "field.urgency": 0.0,
+        "field.category": 1.0,
+        "field.urgency": 1.0,
         "field.sentiment": 0.0,
         "field.policy_number": 1.0,
         "field.product": 1.0,
         "field.escalate": 1.0,
         "field.contains_pii": 1.0,
         "field.language": 1.0,
-        "field_accuracy": 0.625,
+        "field_accuracy": 0.875,
         "record_accuracy": 0.0,
         "schema_valid": 1.0,
-        "needs_review": 1.0
+        "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 8870.2,
+      "latency_ms": 20.3,
       "output": {
-        "evidence": "",
-        "category": "information",
-        "urgency": 1,
-        "sentiment": "neutral",
+        "evidence": "My premium of Rs 63000 was debited twice this month from my account for policy my policy.  Please REVERSE ONE OF THEM.",
+        "category": "billing",
+        "urgency": 3,
+        "sentiment": "angry",
         "product": "unknown",
         "language": "en",
-        "needs_human_review": true,
-        "review_reason": "RateLimitError: litellm.RateLimitError: litellm.RateLimitError: geminiException - {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limit",
+        "needs_human_review": false,
+        "review_reason": "",
         "policy_number": null,
         "contains_pii": false,
         "escalate": false
@@ -3265,33 +3265,33 @@
     {
       "id": "T0042",
       "metrics": {
-        "field.category": 0.0,
-        "field.urgency": 0.0,
-        "field.sentiment": 0.0,
+        "field.category": 1.0,
+        "field.urgency": 1.0,
+        "field.sentiment": 1.0,
         "field.policy_number": 1.0,
-        "field.product": 0.0,
-        "field.escalate": 0.0,
+        "field.product": 1.0,
+        "field.escalate": 1.0,
         "field.contains_pii": 1.0,
         "field.language": 1.0,
-        "field_accuracy": 0.375,
-        "record_accuracy": 0.0,
+        "field_accuracy": 1.0,
+        "record_accuracy": 1.0,
         "schema_valid": 1.0,
-        "needs_review": 1.0
+        "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 10497.9,
+      "latency_ms": 19.8,
       "output": {
-        "evidence": "",
-        "category": "information",
-        "urgency": 1,
-        "sentiment": "neutral",
-        "product": "unknown",
+        "evidence": "You have REJECTED my claim on AUR-2895173 without giving any clause.",
+        "category": "claims",
+        "urgency": 5,
+        "sentiment": "angry",
+        "product": "platinum",
         "language": "en",
-        "needs_human_review": true,
-        "review_reason": "RateLimitError: litellm.RateLimitError: litellm.RateLimitError: geminiException - {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limit",
+        "needs_human_review": false,
+        "review_reason": "",
         "policy_number": "AUR-2895173",
         "contains_pii": false,
-        "escalate": false
+        "escalate": true
       }
     },
     {
@@ -3311,7 +3311,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 11761.5,
+      "latency_ms": 20.4,
       "output": {
         "evidence": "I want to upgrade from my current plan to a higher sum insured on AUR-3357475 at renewal.",
         "category": "policy_change",
@@ -3343,7 +3343,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 8970.5,
+      "latency_ms": 20.4,
       "output": {
         "evidence": "Could you send me the 80D certificate for policy AUR-9788056 for the last financial year?",
         "category": "billing",
@@ -3375,7 +3375,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 9551.4,
+      "latency_ms": 19.5,
       "output": {
         "evidence": "You have REJECTED my claim on AUR-5172401 without giving any clause.",
         "category": "claims",
@@ -3407,7 +3407,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 13521.8,
+      "latency_ms": 19.0,
       "output": {
         "evidence": "I want to upgrade from my current plan to a higher sum insured on AUR-5333656 at renewal.",
         "category": "policy_change",
@@ -3439,7 +3439,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 2593.2,
+      "latency_ms": 18.9,
       "output": {
         "evidence": "The network hospital refused cashless saying you have not settled their dues.",
         "category": "claims",
@@ -3459,24 +3459,24 @@
       "metrics": {
         "field.category": 1.0,
         "field.urgency": 1.0,
-        "field.sentiment": 0.0,
+        "field.sentiment": 1.0,
         "field.policy_number": 1.0,
         "field.product": 1.0,
         "field.escalate": 1.0,
         "field.contains_pii": 1.0,
         "field.language": 1.0,
-        "field_accuracy": 0.875,
-        "record_accuracy": 0.0,
+        "field_accuracy": 1.0,
+        "record_accuracy": 1.0,
         "schema_valid": 1.0,
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 10027.4,
+      "latency_ms": 19.0,
       "output": {
         "evidence": "My premium of Rs 41800 was debited twice this month from my account for policy AUR-9412462.",
         "category": "billing",
         "urgency": 3,
-        "sentiment": "neutral",
+        "sentiment": "frustrated",
         "product": "unknown",
         "language": "en",
         "needs_human_review": false,
@@ -3503,7 +3503,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 11756.8,
+      "latency_ms": 18.9,
       "output": {
         "evidence": "Is teleconsultation included in my plan or do I need teh OPD rider?",
         "category": "information",
@@ -3535,7 +3535,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 57349.6,
+      "latency_ms": 19.6,
       "output": {
         "evidence": "Please add my newborn daughter to AUR-5088548.",
         "category": "policy_change",
@@ -3553,7 +3553,7 @@
     {
       "id": "T0189",
       "metrics": {
-        "field.category": 1.0,
+        "field.category": 0.0,
         "field.urgency": 0.0,
         "field.sentiment": 0.0,
         "field.policy_number": 1.0,
@@ -3561,16 +3561,16 @@
         "field.escalate": 1.0,
         "field.contains_pii": 1.0,
         "field.language": 1.0,
-        "field_accuracy": 0.75,
+        "field_accuracy": 0.625,
         "record_accuracy": 0.0,
         "schema_valid": 1.0,
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 13608.2,
+      "latency_ms": 20.8,
       "output": {
         "evidence": "Just wanted to confirm whether my no-claim bonus is affected by this claim.",
-        "category": "information",
+        "category": "claims",
         "urgency": 2,
         "sentiment": "neutral",
         "product": "unknown",
@@ -3599,7 +3599,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 10458.3,
+      "latency_ms": 20.5,
       "output": {
         "evidence": "My claim on my Aurora Platinum policy was settled at Rs 12400 but the hospital bill was much higher.",
         "category": "claims",
@@ -3631,7 +3631,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 10957.2,
+      "latency_ms": 20.3,
       "output": {
         "evidence": "The AURORA APP CRASHES EVERY time I try to upload a document for my policy.",
         "category": "technical",
@@ -3663,7 +3663,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 50493.3,
+      "latency_ms": 20.4,
       "output": {
         "evidence": "I cannot reset my portal password for AUR-7816803.",
         "category": "technical",
@@ -3695,7 +3695,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 12381.6,
+      "latency_ms": 19.3,
       "output": {
         "evidence": "The hospital locator on the app shows zero results for MY CITY.",
         "category": "technical",
@@ -3714,24 +3714,24 @@
       "id": "T0107",
       "metrics": {
         "field.category": 1.0,
-        "field.urgency": 1.0,
+        "field.urgency": 0.0,
         "field.sentiment": 1.0,
         "field.policy_number": 1.0,
         "field.product": 1.0,
         "field.escalate": 1.0,
         "field.contains_pii": 1.0,
         "field.language": 1.0,
-        "field_accuracy": 1.0,
-        "record_accuracy": 1.0,
+        "field_accuracy": 0.875,
+        "record_accuracy": 0.0,
         "schema_valid": 1.0,
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 7566.6,
+      "latency_ms": 20.2,
       "output": {
         "evidence": "Please add my spouse to poilcy AUR-5701239.",
         "category": "policy_change",
-        "urgency": 3,
+        "urgency": 2,
         "sentiment": "neutral",
         "product": "unknown",
         "language": "en",
@@ -3759,7 +3759,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 7580.0,
+      "latency_ms": 20.5,
       "output": {
         "evidence": "Please add my spouse to poilcy AUR-2840778.",
         "category": "policy_change",
@@ -3791,7 +3791,7 @@
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 49984.1,
+      "latency_ms": 18.0,
       "output": {
         "evidence": "Please add my spouse to policy AUR-4308552.",
         "category": "policy_change",
@@ -3809,30 +3809,30 @@
     {
       "id": "T0226",
       "metrics": {
-        "field.category": 0.0,
-        "field.urgency": 0.0,
+        "field.category": 1.0,
+        "field.urgency": 1.0,
         "field.sentiment": 1.0,
         "field.policy_number": 1.0,
         "field.product": 1.0,
         "field.escalate": 1.0,
         "field.contains_pii": 1.0,
         "field.language": 1.0,
-        "field_accuracy": 0.75,
-        "record_accuracy": 0.0,
+        "field_accuracy": 1.0,
+        "record_accuracy": 1.0,
         "schema_valid": 1.0,
-        "needs_review": 1.0
+        "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 10361.0,
+      "latency_ms": 15.4,
       "output": {
-        "evidence": "",
-        "category": "information",
-        "urgency": 1,
+        "evidence": "Could you send me teh 80D certificate for policy my policy for teh last financial year?",
+        "category": "billing",
+        "urgency": 2,
         "sentiment": "neutral",
         "product": "unknown",
         "language": "en",
-        "needs_human_review": true,
-        "review_reason": "RateLimitError: litellm.RateLimitError: litellm.RateLimitError: geminiException - {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limit",
+        "needs_human_review": false,
+        "review_reason": "",
         "policy_number": null,
         "contains_pii": true,
         "escalate": false
@@ -3843,24 +3843,24 @@
       "metrics": {
         "field.category": 1.0,
         "field.urgency": 0.0,
-        "field.sentiment": 1.0,
+        "field.sentiment": 0.0,
         "field.policy_number": 1.0,
         "field.product": 1.0,
         "field.escalate": 1.0,
         "field.contains_pii": 1.0,
         "field.language": 1.0,
-        "field_accuracy": 0.875,
+        "field_accuracy": 0.75,
         "record_accuracy": 0.0,
         "schema_valid": 1.0,
         "needs_review": 0.0
       },
       "error": null,
-      "latency_ms": 50279.4,
+      "latency_ms": 11.2,
       "output": {
-        "evidence": "My clam on my Aurora Silver poilcy was settled at Rs 12400 but teh hospital bill was much higher.",
+        "evidence": "What is proportionate deduction and why does it apply to me?",
         "category": "claims",
         "urgency": 2,
-        "sentiment": "frustrated",
+        "sentiment": "neutral",
         "product": "silver",
         "language": "en",
         "needs_human_review": false,
