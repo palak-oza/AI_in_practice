@@ -34,33 +34,28 @@ MODES = {
 _FACT = re.compile(r"\d[\d,]*")
 def answer_in_corpus(gold_answer: str, corpus: dict[str, str],
                      relevant_docs: list[str]) -> bool:
-    """Mode 1 test: is the answer's substance present in the relevant documents?
+    """Mode 1 test: is the answer's substance present anywhere in the corpus?
 
-    The shipped version scored word overlap over tokens longer than 4 chars.
-    That fails the moment the gold answer paraphrases the corpus -- "30 days
-    from the date of discharge" against "submitted within 30 days of
-    discharge" shares almost no long tokens -- so it reports mode 1 (a data
-    problem, unfixable by retrieval) for what is really a retrieval problem.
-    Over-reporting mode 1 sends you hunting for missing documents that are
-    not missing.
-
-    This version checks the FIGURES instead. A policy answer is carried by its
-    numbers, and a number survives rewording. Where the gold answer has no
-    numbers it falls back to the token test, because there is nothing better.
-
-    How I know it is better: on my 10 Lab 4 failures the shipped test flagged
-    several as mode 1 whose gold figures are demonstrably present in the
-    corpus (Q04's "36 months" is in pre-existing-conditions.md). This version
-    flags none of them, which agrees with grep.
+    This is a cheap candidate check, not proof that the evidence is usable.
+    Search the whole corpus (mode 1 is about source coverage), then look for
+    numeric facts or enough distinctive answer words. A positive result should
+    still be verified in the source, especially for short numbers and generic
+    tokens. Chunk availability and retrieval rank are tested separately.
     """
-    text = " ".join(corpus.get(d, "") for d in relevant_docs)
+    # Mode 1 asks whether the answer exists anywhere in the corpus. Restricting
+    # this check to annotated relevant documents confuses a retrieval failure
+    # with missing source material.
+    text = " ".join(corpus.values())
     if not text:
         return False
 
     facts = {f.replace(",", "") for f in _FACT.findall(gold_answer)}
     if facts:
         haystack = text.replace(",", "")
-        return all(f in haystack for f in facts)
+        # Small numbers and years are common incidental matches. Require
+        # standalone numeric facts, and allow each independently to be found.
+        return any(re.search(rf"(?<!\d){re.escape(f)}(?!\d)", haystack)
+                   for f in facts)
 
     tokens = [t.strip(".,;()") for t in gold_answer.lower().split() if len(t) > 4]
     if not tokens:
@@ -83,22 +78,23 @@ def classify(row: dict, q: dict, corpus: dict[str, str], *,
     # Mode 1: the gold answer content is not present in the
     # relevant documents.
     if not answer_in_corpus(q["gold_answer"], corpus, q["relevant_docs"]):
-        return 1, "gold answer content not found in the relevant documents"
+        return 1, "gold answer substance not found anywhere in the corpus"
 
-    # Mode 6: gold context fixes the answer.
-    # If giving the generator the gold context fixes the answer,
-    # the original failure was caused by retrieval.
+    # Gold-context evidence is only available when explicitly supplied.
+    # A True result means retrieval failed; False means generation failed.
     if gold_context_fixes_it is True:
-        return 6, "gold context fixes the answer: retrieval was at fault"
+        # Retrieval was at fault; continue below when rank evidence is supplied
+        # so the cause can be narrowed to ranking, reranking, or discovery.
+        pass
 
     # If gold context was tested and it did NOT fix the answer,
     # the problem is generation.
     if gold_context_fixes_it is False:
         return 6, "gold context does not fix the answer: generation failure"
 
-    # Mode 4 / 5:
-    # Gold document was retrieved somewhere in the top 30,
-    # but did not survive into the final retrieved context.
+    # A correct refusal on an unanswerable question is not a failure, but rows
+    # reaching this function have already been selected as failures. Content
+    # lookup is corpus-wide; relevant-doc presence is separate retrieval data.
     if in_top_30 is True:
         if dropped_by_reranker is True:
             return 5, "gold document was in top 30 but dropped by reranker"
@@ -141,7 +137,8 @@ def pareto(tally: Counter) -> str:
 
     for mode, n in tally.most_common():
         cum += n
-        bar = "█" * round(30 * n / total)
+        # ASCII chart works in the default Windows cp1252 console too.
+        bar = "#" * round(30 * n / total)
         lines.append(
             f"{MODES[mode]:<20} {n:>3}   {n/total:>5.1%}   "
             f"{cum/total:>5.1%}  {bar}"

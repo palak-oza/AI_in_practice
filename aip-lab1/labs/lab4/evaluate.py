@@ -25,11 +25,18 @@ from aip.chunking import markdown_chunks  # noqa: E402
 from aip.cost import Budget  # noqa: E402
 from aip.evals import judge_agreement, llm_judge  # noqa: E402
 from aip.retrieval import DenseRetriever, format_context  # noqa: E402
-from labs.lab3.search import load_corpus, load_questions  # noqa: E402
+from labs.lab3.search import load_questions  # noqa: E402
 from labs.lab4.rag import REFUSAL, answer_question, answer_with_gold_context  # noqa: E402
 
 GOLDEN = ROOT / "data/eval/rag_golden.jsonl"
 LABEL_SHEET = ROOT / "labs/lab4/calibration_labels.jsonl"
+CORPUS_DIR = ROOT / "data/corpus"
+
+
+def load_lab4_corpus() -> dict[str, str]:
+    """Load the Lab 4 insurance corpus, not Lab 3's scaled synthetic corpus."""
+    return {p.stem: p.read_text(encoding="utf-8")
+            for p in sorted(CORPUS_DIR.glob("*.md"))}
 
 
 def build_retriever():
@@ -43,7 +50,7 @@ def build_retriever():
     identical on quality anyway. The audit argument for keeping the archived
     file on disk is unaffected: it is still in data/corpus/, just not indexed.
     """
-    corpus = load_corpus()
+    corpus = load_lab4_corpus()
     chunks = [c for doc_id, text in corpus.items() if "ARCHIVED" not in doc_id
               for c in markdown_chunks(text, doc_id, size=300)]
     return DenseRetriever(chunks, show_progress=False)
@@ -286,9 +293,10 @@ def run_strictness() -> None:
 
 def run_gold_context() -> None:
     """E2: the decomposition. The highest-value ten minutes in the lab."""
-    questions = [q for q in load_questions() if q["relevant_docs"]]
+    questions = [q for q in load_questions(include_unanswerable=True)
+                 if q["kind"] != "unanswerable" and q["relevant_docs"]]
     retriever = build_retriever()
-    corpus = load_corpus()
+    corpus = load_lab4_corpus()
 
     retrieved, gold = [], []
     with Budget(limit_usd=1.00, label="lab4-decomposition"):
@@ -296,7 +304,7 @@ def run_gold_context() -> None:
             a = answer_question(q["question"], retriever)
             retrieved.append(judge_correctness(q["question"], a.text, q["gold_answer"]))
             g = answer_with_gold_context(
-                q["question"], [corpus[d] for d in q["relevant_docs"] if d in corpus])
+                q["question"], [(d, corpus[d]) for d in q["relevant_docs"] if d in corpus])
             gold.append(judge_correctness(q["question"], g.text, q["gold_answer"]))
 
     A, B = _mean(gold) / 2, _mean(retrieved) / 2
@@ -348,7 +356,7 @@ def classify_failure(row: dict, retriever) -> tuple[int, str]:
     (it is provable), then whether the evidence reached the context at all,
     and only call it generation when the evidence demonstrably did arrive.
     """
-    if not row["citations_valid"]:
+    if row.get("correctness", 0) >= 2 and not row.get("citations_valid", True):
         return 7, FAILURE_MODES[7]
 
     hits = retriever.search(row["question"], k=30)
@@ -370,11 +378,18 @@ def classify_failure(row: dict, retriever) -> tuple[int, str]:
     return 3, FAILURE_MODES[3]        # never ranked
 
 
+def console_safe(text: str) -> str:
+    """Make diagnostic text printable in Windows cp1252 and UTF-8 terminals."""
+    encoding = getattr(sys.stdout, "encoding", None) or "utf-8"
+    return text.encode(encoding, errors="backslashreplace").decode(encoding)
+
+
 def run_failures() -> None:
     """E3: tag every wrong answer with a failure mode. Lab 5's backlog."""
     rows = json.loads((ROOT / "reports/lab4.json").read_text(encoding="utf-8"))
-    wrong = sorted((r for r in rows if r["correctness"] is not None
-                    and r["correctness"] < 2), key=lambda r: r["correctness"])
+    wrong = sorted((r for r in rows if (r["correctness"] is not None
+                    and r["correctness"] < 2) or not r.get("citations_valid", True)),
+                   key=lambda r: (r["correctness"] is None, r["correctness"] or 0))
     retriever = build_retriever()
 
     tally: dict[int, int] = {}
@@ -385,17 +400,23 @@ def run_failures() -> None:
         r["failure_mode"] = mode
         print(f"{r['id']:<5} ({r['kind']:<13}) correctness={r['correctness']} "
               f"faith={r['faithfulness']} -> MODE {mode}: {why}")
-        print(f"  Q:    {r['question'][:94]}")
-        print(f"  gold: {' '.join(r['gold_answer'].split())[:94]}")
-        print(f"  got:  {' '.join(r['answer'].split())[:94]}\n")
+        print(f"  Q:    {console_safe(r['question'][:94])}")
+        print(f"  gold: {console_safe(' '.join(r['gold_answer'].split())[:94])}")
+        print(f"  got:  {console_safe(' '.join(r['answer'].split())[:94])}\n")
 
     print("tally (this is the Lab 5 backlog, largest first):")
     for mode, n in sorted(tally.items(), key=lambda kv: -kv[1]):
         print(f"  mode {mode}  n={n:<3} {FAILURE_MODES[mode]}")
 
-    out = ROOT / "reports/lab4_failures.json"
-    out.write_text(json.dumps(wrong, indent=2, ensure_ascii=False), encoding="utf-8")
-    print(f"\nsaved -> {out}")
+    # Keep the failure tags alongside the full evaluation so Lab 5 has one
+    # authoritative JSON input and the prescribed workflow creates no sidecar.
+    by_id = {r["id"]: r for r in rows}
+    for failure in wrong:
+        if failure["id"] in by_id:
+            by_id[failure["id"]]["failure_mode"] = failure["failure_mode"]
+    path = ROOT / "reports/lab4.json"
+    path.write_text(json.dumps(rows, indent=2, ensure_ascii=False), encoding="utf-8")
+    print(f"\nupdated failure_mode fields -> {path}")
 
 
 def make_calibration_sheet() -> None:
@@ -419,15 +440,15 @@ def report_kappa() -> None:
     for field in ("faithfulness", "correctness"):
         # Drop any case the judge failed to parse: it has no machine label to
         # agree or disagree with, and pairing it with 0 would deflate kappa.
-        pairs = [(machine[r["id"]][field], r[f"human_{field}"]) for r in human
+        pairs = [(r["id"], machine[r["id"]][field], r[f"human_{field}"]) for r in human
                  if r[f"human_{field}"] is not None
-                 and machine[r["id"]][field] is not None]
+                 and r["id"] in machine and machine[r["id"]][field] is not None]
         if not pairs:
             print(f"{field}: no usable labels yet")
             continue
-        m, h = [p[0] for p in pairs], [p[1] for p in pairs]
+        m, h = [p[1] for p in pairs], [p[2] for p in pairs]
         print(f"{field}: {judge_agreement(m, h)}")
-        disagree = [r["id"] for (a, b), r in zip(pairs, human) if a != b]
+        disagree = [case_id for case_id, a, b in pairs if a != b]
         if disagree:
             print(f"  disagreements: {', '.join(disagree)}")
     print("\nkappa < 0.4 -> fix the rubric, not the model. Read your disagreements.")
