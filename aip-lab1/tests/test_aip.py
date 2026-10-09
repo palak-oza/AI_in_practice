@@ -17,8 +17,7 @@ sys.path.insert(0, str(ROOT))
 from aip.chunking import fixed_chunks, markdown_chunks, recursive_chunks, sliding_chunks
 from aip.cost import Budget, BudgetExceeded, Usage, price_of
 from aip.evals import field_accuracy, judge_agreement, retrieval_metrics
-from aip.guards import (delimit_untrusted, detect_injection, enforce_citations,
-                        redact_pii)
+from aip.guards import delimit_untrusted, detect_injection, enforce_citations, redact_pii
 from aip.llm import extract_json
 
 

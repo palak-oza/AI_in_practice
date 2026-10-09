@@ -1,0 +1,13 @@
+# Lab 7 regression gate. Tune these to just below what you actually achieve --
+# a gate set at your current number fails on noise; a gate set far below it
+# never fires. Aim for roughly one standard error of headroom.
+#
+# Note that cost and latency have gates too. They regress silently otherwise.
+correctness:        {min: 0.75}
+faithfulness:       {min: 0.90}
+citation_validity:  {min: 0.98}
+refusal_recall:     {min: 0.80}
+refusal_precision:  {min: 0.75}
+hit_rate_at_5:      {min: 0.85}
+cost_per_query_usd: {max: 0.010}
+p95_latency_ms:     {max: 6000}

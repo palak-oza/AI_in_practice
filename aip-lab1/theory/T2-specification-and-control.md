@@ -14,8 +14,13 @@
 | 0–15 | §1 Why "prompt engineering" is the wrong mental model |
 | 15–40 | §2 The prompt as a program: anatomy and the seven components |
 | 40–65 | §3 Schemas as contracts: structured output that actually holds |
-| 65–80 | §4 The repair loop, routing, and confidence |
-| 80–90 | §5 Untrusted input: a first look at injection |
+| 65–78 | §4 The repair loop, routing, and confidence |
+| 78–90 | §5 Untrusted input: a first look at injection, and how to measure a guard |
+
+§5 now runs 12 minutes rather than 10: §§5.1–5.3 add the two defence layers Lab 6
+uses and this section previously skipped, plus the reason a block rate on its own
+is meaningless. The two minutes come from §4, where the confidence material is
+the most compressible.
 
 ---
 
@@ -343,6 +348,81 @@ this section.
 If a successful injection can only make the model return the wrong ticket
 category, that is a quality incident. If it can make the model call
 `issue_refund`, that is a breach. Design so that the worst case is the first.
+
+### 5.1 The two layers this section skipped
+
+Lab 6 layers five defences, not three. The two above are the strongest; these
+two are the ones you will actually spend your time tuning.
+
+**4. Heuristic detection.** Regex over *retrieved* content, looking for
+injection signatures — `ignore previous instructions`, `you are now`,
+`reveal the system prompt`. `aip.guards.detect_injection` groups them as
+override, role_switch and exfiltration.
+
+This is a **classifier**, and every classifier has two error rates. It is where
+your false positives come from, because ordinary English contains those words.
+A real customer writing *"I want to ignore what the agent told me previously
+and start fresh"* is not attacking you, and a system that refuses them has
+failed — differently, but just as badly.
+
+**5. Output filtering.** Check the answer before it leaves: does it contain
+your system prompt, a URL you did not supply, PII, a canary? Input filtering
+guesses at intent; output filtering observes a result, so it is cheaper to get
+right — and it is the only layer that catches **exfiltration**, where the
+attack succeeds silently and the damage is in what leaves.
+
+> **The sentence to remember, and it generalises well beyond security:**
+> **constraints have no false positives; classifiers do.** Layer 2 does not
+> *decide* whether anything is hostile — it says "return an object with these
+> six fields", so an injected instruction has nowhere to express itself, and it
+> never refuses a real customer because it is not in the business of judging
+> intent.
+
+### 5.2 You cannot measure a guard with one number
+
+A guard that blocks everything scores a **perfect block rate** and is useless.
+
+```
+block rate          = attacks blocked / attacks          <- want high
+false-positive rate = innocent blocked / innocent        <- want low
+```
+
+Lab 6's attack suite is 21 cases: 17 attacks and **4 controls** — innocent
+messages that look like attacks. The controls are the only thing in the suite
+that can detect over-blocking, and you measure both rates **after every layer**.
+A layer that adds 2 points of block rate and 25 points of false positives is a
+bad layer, and that is only visible if you tracked both.
+
+Same shape as precision and recall, quality and cost, dev and test. One-sided
+measurement makes a broken system look good.
+
+### 5.3 Three things worth knowing about
+
+**Canary tokens.** Put a unique random string in your system prompt; check every
+output for it. A detector with a false-positive rate of essentially zero — the
+string exists nowhere else — that fires on attacks nobody wrote a rule for. It
+catches *verbatim* leakage only; a model that paraphrases your prompt will not
+trip it.
+
+**The dual-model architecture.** A privileged planner that holds the tools and
+never sees untrusted content, and an unprivileged reader that processes
+documents and returns structured summaries. Injection needs untrusted text and
+privilege to meet in one context; this removes the precondition rather than
+resisting it, which is why it is the only *structural* defence available. It is
+not free — the planner works from a summary, so it is worse at some things, and
+the honest version of this proposal measures that capability cost.
+
+**OWASP Top 10 for LLM Applications.** The standard risk catalogue, and the
+vocabulary you will use talking to a security team. `aip/guards.py` maps its
+controls onto it in the module docstring:
+
+| OWASP | Control |
+|---|---|
+| LLM01 Prompt Injection | `detect_injection`, `delimit_untrusted` |
+| LLM02 Insecure Output Handling | `ToolGuard` argument validation |
+| LLM06 Sensitive Information Disclosure | `redact_pii` |
+| LLM10 Unbounded Consumption | `ToolGuard` budgets + `aip.cost.Budget` |
+
 
 **Discussion (5 min).** A RAG chatbot answers questions over a company wiki
 that any employee can edit. Name three distinct attacks and, for each, the
