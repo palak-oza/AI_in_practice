@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Lab 7 — the regression gate. Exits non-zero when a threshold is breached.
+"""Lab 7 regression gate: evaluate the configured RAG service against golden data.
 
-    python labs/lab7/gate.py --config labs/lab7/thresholds.yml
+Run with AIP_OFFLINE=1 to replay committed model responses without provider calls.
 """
 from __future__ import annotations
 
 import argparse
-import json
+import math
 import statistics
 import sys
 import time
@@ -19,30 +19,80 @@ sys.path.insert(0, str(ROOT))
 
 
 def measure() -> dict[str, float]:
-    """Run deterministic offline replay over the committed golden set.
+    """Measure golden-set answer quality and operations on the Lab 7 RAG path.
 
-    Retrieval and operational gates need no API key; generation quality remains
-    reproducible through the committed LLM cache when the full eval is run.
+    Model-judge calls are evaluated from the LLM response cache in offline CI.
+    Cost and latency are measured around answer generation only; judge overhead
+    is excluded from the per-query service cost and latency values.
     """
+    from aip.cost import global_budget
     from aip.evals import retrieval_metrics
-    from aip.retrieval import DenseRetriever
-    from labs.lab3.search import build_chunks, load_corpus
+    from aip.retrieval import format_context
+    from labs.lab3.search import load_questions
+    from labs.lab4.evaluate import judge_correctness, judge_faithfulness, refusal_stats
+    from labs.lab4.rag import answer_question
+    from labs.lab7 import service
 
-    rows = [json.loads(line) for line in (ROOT / "data/eval/rag_golden.jsonl").read_text(encoding="utf-8").splitlines() if line]
-    retriever = DenseRetriever(build_chunks(load_corpus(), strategy="markdown", size=400, overlap=150), show_progress=False)
-    hit5, latencies, refusals = [], [], []
-    for row in rows:
-        t0 = time.perf_counter()
-        hits = retriever.search(row["question"], k=5)
-        latencies.append((time.perf_counter() - t0) * 1000)
-        docs = list(dict.fromkeys(hit.doc_id for hit in hits))
-        hit5.append(retrieval_metrics(docs, row["relevant_docs"])["hit_rate@5"] if row["relevant_docs"] else 1.0)
-        refusals.append(row["kind"] == "unanswerable")
-    p95 = sorted(latencies)[int(.95 * (len(latencies) - 1))]
-    score = statistics.fmean(hit5)
-    return {"correctness": score, "faithfulness": 1.0, "citation_validity": 1.0,
-            "refusal_recall": 1.0 if any(refusals) else 0.0, "refusal_precision": 1.0,
-            "hit_rate_at_5": score, "cost_per_query_usd": 0.0, "p95_latency_ms": p95}
+    questions = load_questions(include_unanswerable=True)
+    if not questions:
+        raise RuntimeError("golden set is empty")
+
+    rag = service.pipeline().retriever
+    rows: list[dict] = []
+    answer_costs: list[float] = []
+    latencies: list[float] = []
+    hit5: list[float] = []
+
+    for q in questions:
+        before_cost = global_budget().spent_usd
+        started = time.perf_counter()
+        result = answer_question(q["question"], rag, k=12, final_k=5)
+        latencies.append((time.perf_counter() - started) * 1000)
+        answer_costs.append(global_budget().spent_usd - before_cost)
+
+        retrieved = list(dict.fromkeys(hit.doc_id for hit in result.hits))
+        if q["relevant_docs"]:
+            hit5.append(retrieval_metrics(
+                retrieved, q["relevant_docs"], ks=(5,)
+            )["hit_rate@5"])
+        context = format_context(result.hits)
+
+        faithfulness = judge_faithfulness(result.text, context)
+        if faithfulness is None:
+            raise RuntimeError(f"faithfulness judge returned no score for {q['id']}")
+        correctness = None
+        if q["relevant_docs"] and q["kind"] != "unanswerable":
+            correctness = judge_correctness(q["question"], result.text, q["gold_answer"])
+            if correctness is None:
+                raise RuntimeError(f"correctness judge returned no score for {q['id']}")
+
+        rows.append({
+            "unanswerable": not q["relevant_docs"] or q["kind"] == "unanswerable",
+            "refused": result.refused,
+            "partial_decline": result.partial_decline,
+            "citations_valid": result.citations_valid,
+            "faithfulness": float(faithfulness),
+            "correctness": correctness,
+        })
+
+    answerable_scores = [r["correctness"] for r in rows if r["correctness"] is not None]
+    if not answerable_scores:
+        raise RuntimeError("golden set contains no answerable cases")
+    if not hit5:
+        raise RuntimeError("golden set contains no retrieval-labeled cases")
+    refusals = refusal_stats(rows)
+    ordered = sorted(latencies)
+    p95 = ordered[max(0, math.ceil(0.95 * len(ordered)) - 1)]
+    return {
+        "correctness": statistics.fmean(answerable_scores) / 2.0,
+        "faithfulness": statistics.fmean(r["faithfulness"] for r in rows),
+        "citation_validity": statistics.fmean(float(r["citations_valid"]) for r in rows),
+        "refusal_recall": refusals["recall"],
+        "refusal_precision": refusals["precision"],
+        "hit_rate_at_5": statistics.fmean(hit5),
+        "cost_per_query_usd": statistics.fmean(answer_costs),
+        "p95_latency_ms": p95,
+    }
 
 
 def main() -> int:
@@ -61,7 +111,7 @@ def main() -> int:
         value = metrics.get(name)
         if value is None:
             failures.append(f"{name}: not measured")
-            print(f"{name:<{width}}  {'—':>10}  {'':>14}  MISSING")
+            print(f"{name:<{width}}  {'?':>10}  {'':>14}  MISSING")
             continue
         ok, gate = True, ""
         if "min" in rule:
@@ -74,8 +124,8 @@ def main() -> int:
 
     if failures:
         print("\nGATE FAILED:")
-        for f in failures:
-            print("  " + f)
+        for failure in failures:
+            print("  " + failure)
         return 1
     print("\nGATE PASSED")
     return 0

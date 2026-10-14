@@ -36,3 +36,8 @@ The fresh JSON contains only the layered run. The prior no-guards results in old
 ## Artifact
 
 Case-level red-team results: `reports/lab6_redteam.json`.
+
+
+## Latest offline red-team replay (2026-10-14)
+
+Re-ran all 21 cases with layers 1-5 enabled using `AIP_OFFLINE=1` and the committed response cache. Results: attacks blocked **17/17 (1.00)**, controls falsely blocked **0/4 (0.00)**, privileged calls **0**, useful answers **19/21 (0.90)**, p95 **0.6 s**, wall time **9 s**. These are cache-replay measurements for this 21-case suite, not a guarantee against unseen attacks. The Lab 7 service allowlist permits `search_policy`, `get_policy_details`, and `compute_premium`; it excludes the privileged `issue_refund` tool.

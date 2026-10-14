@@ -45,3 +45,21 @@ This system is not safe to use for coverage, claim-settlement, pricing, medical,
 ## Alert and regression demonstration
 
 The dashboard alerts when the refusal rate of the newest ten requests is at least double the earlier baseline; the response is to pause deployments and inspect corpus freshness and retrieval traces. To demonstrate a red gate, temporarily set `hit_rate_at_5: {min: 1.01}` in `thresholds.yml`, run the gate, capture the failure, and restore the tested threshold.
+
+
+## Latest Lab 7 gate run (2026-10-14)
+
+The 45-case golden set was evaluated through the Lab 7 RAG pipeline with `AIP_OFFLINE=1`, using cached Gemini responses and cached judge verdicts. No live provider calls were made. The gate computes each quality metric from the current outputs; retrieval hit@5 excludes the three cases with no relevant-document labels.
+
+| Metric | Measured | Threshold | Result / scope |
+|---|---:|---:|---|
+| Correctness (normalized 0-1) | 0.8375 | >= 0.75 | 40 answerable cases |
+| Faithfulness | 0.9556 | >= 0.90 | 43/45 judged supported |
+| Citation validity | 1.0000 | >= 0.98 | 45/45 |
+| Full refusal recall | 0.8000 | >= 0.80 | 4/5 unanswerable cases |
+| Full refusal precision | 0.6667 | >= 0.75 | 4/6 full refusals; **gate fails** |
+| Retrieval hit@5 | 1.0000 | >= 0.85 | 42 labeled cases |
+| Cost per query | $0.0000 | <= $0.010 | Offline replay spend only; live cost not measured |
+| p95 answer latency | 14.7 ms | <= 6,000 ms | Offline cached-response replay; not live uncached latency |
+
+Counting partial declines as refusals changes refusal recall/precision to 5/5 (1.000) and 5/8 (0.625), respectively. The exact full-refusal definition is used by the gate. The measured precision miss is a genuine quality failure; do not lower the configured 0.75 floor just to make CI green.

@@ -23,7 +23,7 @@ from aip import cache, tracing  # noqa: E402
 from aip.cost import BudgetExceeded, global_budget  # noqa: E402
 from aip.guards import ToolGuard  # noqa: E402
 from aip.retrieval import DenseRetriever  # noqa: E402
-from labs.lab3.search import build_chunks, load_corpus  # noqa: E402
+from labs.lab4.evaluate import build_retriever  # noqa: E402
 from labs.lab4.rag import REFUSAL, answer_question  # noqa: E402
 from labs.lab6.agent import run_agent  # noqa: E402
 
@@ -47,9 +47,8 @@ def pipeline() -> Pipeline:
     """Build and retain the retrieval index and guarded tool configuration."""
     global _PIPELINE
     if _PIPELINE is None:
-        chunks = build_chunks(load_corpus(), strategy="markdown", size=400, overlap=150)
         _PIPELINE = Pipeline(
-            DenseRetriever(chunks, show_progress=False),
+            build_retriever(),
             ToolGuard(max_calls=6, allow={"search_policy", "get_policy_details", "compute_premium"}),
         )
     return _PIPELINE
@@ -123,12 +122,13 @@ def _answer(req: AskRequest) -> tuple[dict, bool]:
 def ask(req: AskRequest) -> AskResponse:
     """Answer a validated request and expose its cost and trace identifier."""
     t0, trace_id = time.perf_counter(), uuid.uuid4().hex
+    cost_before = global_budget().spent_usd
     try:
         with tracing.trace("http.ask", trace_id=trace_id, question=req.question[:120]) as span:
             payload, cached = _answer(req)
             span.update(cached=cached, refused=payload["refused"])
             response = AskResponse(**payload, latency_ms=round((time.perf_counter() - t0) * 1000, 2),
-                                   cost_usd=round(global_budget().spent_usd, 6), cached=cached, trace_id=trace_id)
+                                   cost_usd=round(global_budget().spent_usd - cost_before, 6), cached=cached, trace_id=trace_id)
             _REQUESTS.append({"latency_ms": response.latency_ms, "cached": cached, "error": None})
             return response
     except BudgetExceeded as exc:
@@ -176,12 +176,13 @@ async def ask_stream(req: AskRequest):
 
     async def events():
         trace_id, t0 = uuid.uuid4().hex, time.perf_counter()
+        cost_before = global_budget().spent_usd
         try:
             payload, cached = await asyncio.to_thread(_answer, req)
             for token in payload["answer"].split():
                 yield {"event": "token", "data": token + " "}
             yield {"event": "citations", "data": json.dumps(payload["citations"])}
-            yield {"event": "validation", "data": json.dumps({"valid": True, "cached": cached, "trace_id": trace_id, "total_ms": round((time.perf_counter()-t0)*1000, 2)})}
+            yield {"event": "validation", "data": json.dumps({"valid": True, "cached": cached, "trace_id": trace_id, "total_ms": round((time.perf_counter()-t0)*1000, 2), "cost_usd": round(global_budget().spent_usd - cost_before, 6), "refused": payload["refused"]})}
         except BudgetExceeded as exc:
             yield {"event": "error", "data": json.dumps({"status": 429, "detail": str(exc)})}
         except Exception:

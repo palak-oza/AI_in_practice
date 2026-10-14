@@ -101,12 +101,9 @@ def search_policy(query: str) -> str:
     if _RETRIEVER is None:
         from aip.chunking import markdown_chunks
         from aip.retrieval import DenseRetriever
-        from labs.lab3.search import load_corpus
-        if CORPUS_DIR is None:
-            corpus = load_corpus()
-        else:
-            corpus = {f.stem: f.read_text(encoding="utf-8")
-                      for f in sorted(CORPUS_DIR.glob("*.md"))}
+        source_dir = CORPUS_DIR or (ROOT / "data" / "corpus")
+        corpus = {f.stem: f.read_text(encoding="utf-8")
+                  for f in sorted(source_dir.glob("*.md"))}
         chunks = [c for d, t in corpus.items() for c in markdown_chunks(t, d, 800)]
         _RETRIEVER = DenseRetriever(chunks, show_progress=False)
     hits = _RETRIEVER.search(query, k=4)
