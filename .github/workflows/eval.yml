@@ -1,10 +1,14 @@
 name: eval-gate
 
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   gate:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -12,10 +16,20 @@ jobs:
           python-version: "3.11"
           cache: pip
       - run: pip install -r aip-lab1/requirements.txt
+      - name: Check Gemini API key
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "Missing repository secret GEMINI_API_KEY. Add it under Settings > Secrets and variables > Actions."
+            exit 1
+          fi
       - name: Regression gate
         env:
-          AIP_OFFLINE: "1"
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          AIP_OFFLINE: "0"
           AIP_PROFILE: gemini
+          AIP_BUDGET_USD: "2.00"
         run: python aip-lab1/labs/lab7/gate.py --config labs/lab7/thresholds.yml
       - name: Upload eval report
         if: always()
