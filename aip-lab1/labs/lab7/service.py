@@ -95,11 +95,17 @@ def _semantic_hit(question: str) -> dict | None:
 
 def _answer(req: AskRequest) -> tuple[dict, bool]:
     key = _cache_key(req)
-    if key in _EXACT:
-        return _EXACT[key].copy(), True
-    semantic = _semantic_hit(req.question)
-    if semantic is not None:
-        return semantic, True
+    # The answer cache is for grounded RAG responses only. A semantic RAG hit
+    # must never short-circuit tools mode, which needs to execute its tools for
+    # the current request. Do not cache refusals: a stale refusal would hide a
+    # later retrieval/index fix and is especially confusing in the UI.
+    if req.mode == "rag":
+        if key in _EXACT:
+            return _EXACT[key].copy(), True
+        semantic = _semantic_hit(req.question)
+        if semantic is not None:
+            return semantic, True
+
     p = pipeline()
     if req.mode == "tools":
         result = run_agent(req.question, guard=p.guard, layers={1, 2, 3, 4, 5})
@@ -109,12 +115,15 @@ def _answer(req: AskRequest) -> tuple[dict, bool]:
         payload = {"answer": result.text, "refused": result.refused,
                    "citations": [{"index": i, "doc_id": hit.doc_id, "excerpt": hit.text[:900]}
                                  for i, hit in enumerate(result.hits, 1)]}
-    _EXACT[key] = payload.copy()
-    try:
-        from aip.embed import embed
-        _SEMANTIC.append((embed(req.question), payload.copy()))
-    except Exception:
-        pass
+    if req.mode == "rag" and not payload["refused"]:
+        _EXACT[key] = payload.copy()
+        try:
+            from aip.embed import embed
+            _SEMANTIC.append((embed(req.question), payload.copy()))
+        except Exception:
+            # Semantic caching is an optimization. If embedding is unavailable,
+            # the grounded answer still succeeds and can use the exact cache.
+            pass
     return payload, False
 
 

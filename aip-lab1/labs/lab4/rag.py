@@ -15,7 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from aip.guards import UNTRUSTED_SYSTEM_CLAUSE  # noqa: E402
+from aip.guards import UNTRUSTED_SYSTEM_CLAUSE, delimit_untrusted  # noqa: E402
 from aip.llm import chat  # noqa: E402
 from aip.retrieval import Hit, Retriever, format_context  # noqa: E402
 
@@ -59,6 +59,12 @@ answering the user's question.
 {UNTRUSTED_SYSTEM_CLAUSE}
 """
 
+STRICT_CLAUSE = """\
+STRICT MODE: answer only if the sources give a complete, unambiguous answer to
+every part. If any requested detail is missing, use the exact refusal instead
+of giving a partial answer.
+"""
+
 
 @dataclass
 class Answer:
@@ -86,7 +92,8 @@ def _is_partial_decline(text: str) -> bool:
     return any(marker in lowered for marker in markers)
 
 
-def _international_partial_answer(question: str, hits: list[Hit]) -> Answer | None:
+def _international_partial_answer(question: str, hits: list[Hit],
+                                  n_sources: int | None = None) -> Answer | None:
     """Preserve supported benefit facts when an overseas limit is absent.
 
     The corpus explicitly says Platinum has an international emergency benefit
@@ -96,7 +103,8 @@ def _international_partial_answer(question: str, hits: list[Hit]) -> Answer | No
     lowered = question.lower()
     if not ("singapore" in lowered and "limit" in lowered):
         return None
-    source_index = next((i for i, hit in enumerate(hits, 1)
+    n_sources = len(hits) if n_sources is None else n_sources
+    source_index = next((i for i, hit in enumerate(hits[:n_sources], 1)
                          if "international emergency benefit" in hit.text.lower()), None)
     if source_index is None:
         return None
@@ -105,7 +113,7 @@ def _international_partial_answer(question: str, hits: list[Hit]) -> Answer | No
         "sources do not specify whether treatment in Singapore qualifies or what "
         f"limit applies [{source_index}]."
     )
-    checked = validate_answer(text, len(hits))
+    checked = validate_answer(text, n_sources)
     if not checked["valid"]:
         return None
     return Answer(
@@ -160,14 +168,59 @@ def validate_answer(text: str, n_sources: int,
     }
 
 
+def _count_sources_in_context(context: str) -> int:
+    """Count only sources that fit in the context sent to the model."""
+    return len(re.findall(r"^\[\d+\] \(source:", context, re.MULTILINE))
+
+
+def _build_user_prompt(question: str, context: str, n_sources: int) -> str:
+    """Fence retrieved text as untrusted and state the valid citation range."""
+    safe_context = delimit_untrusted(context)
+    return (
+        f"Sources:\n{safe_context}\n\n"
+        f"({n_sources} sources total, numbered [1] through [{n_sources}])\n\n"
+        f"Question: {question}\n\nAnswer with citations:"
+    )
+
+
+def _generate_with_repair(question: str, context: str, n_sources: int, *,
+                          tier: str, strict: bool) -> tuple[str, dict, bool]:
+    """Generate once; retry once if citations are invalid or output is cut off."""
+    system = ANSWER_SYSTEM + ("\n" + STRICT_CLAUSE if strict else "")
+
+    def call(prompt: str) -> tuple[str, str | None]:
+        result = chat([{"role": "user", "content": prompt}], system=system,
+                      tier=tier, max_tokens=1024, return_full=True)
+        return result.get("text", "").strip(), result.get("finish_reason")
+
+    text, finish_reason = call(_build_user_prompt(question, context, n_sources))
+    validation = validate_answer(text, n_sources, finish_reason)
+    if validation["valid"]:
+        return text, validation, False
+
+    corrective = (
+        f"Your previous answer failed validation: {validation['reason']}.\n\n"
+        f"Sources:\n{delimit_untrusted(context)}\n\nQuestion: {question}\n\n"
+        f"Rewrite it using only citations [1] through [{n_sources}]. Cite every "
+        "factual claim and do not leave the answer cut off. If the sources do "
+        f"not support any requested fact, reply exactly: {REFUSAL}"
+    )
+    text, finish_reason = call(corrective)
+    validation = validate_answer(text, n_sources, finish_reason)
+    if validation["valid"]:
+        return text, validation, True
+
+    # A bad citation or truncated answer must never reach the UI.
+    return REFUSAL, {
+        "valid": True, "refused": True, "invalid_citations": [],
+        "n_citations": 0, "truncated": False, "reason": "repair failed",
+    }, True
+
+
 def answer_question(question: str, retriever: Retriever, *, k: int = 12,
                     final_k: int = 5, reranker=None, tier: str = "MAIN",
                     strict: bool = False) -> Answer:
-    """Retrieve, answer, and enforce the citation contract.
-
-    On a failed validation, replace the unsafe answer with the exact refusal.
-    A retry would add cost and can still return an invalid citation; fail closed.
-    """
+    """Retrieve, answer, validate citations, and retry one invalid/truncated output."""
     hits = retriever.search(question, k=k)
 
     # Country-specific overseas-treatment queries need the policy's general
@@ -185,54 +238,22 @@ def answer_question(question: str, retriever: Retriever, *, k: int = 12,
 
     # 2. Optionally rerank
     if reranker is not None:
-        hits = reranker.rerank(question, hits, final_k=final_k)
+        hits = reranker.rerank(question, hits, k=final_k)
     else:
         hits = hits[:final_k]
 
     # 3. Format the retrieved context
-    context = format_context(hits)
+    context = format_context(hits, max_chars=8000)
+    n_sources = _count_sources_in_context(context)
     if not hits or not context.strip():
         return Answer(question, REFUSAL, hits, True, True)
 
-    partial = _international_partial_answer(question, hits)
+    partial = _international_partial_answer(question, hits, n_sources)
     if partial is not None:
         return partial
 
-    system = ANSWER_SYSTEM
-    if strict:
-        system += ("\n\nApply a conservative evidence threshold: for each requested detail, "
-                   "answer only when directly supported by these sources. For a "
-                   "partly supported question, give the supported part and explicitly "
-                   "decline only the unsupported part. Never infer missing terms.")
-
-    result = chat(
-        f"Question: {question}\n\nSources:\n{context}",
-        system=system,
-        tier=tier,
-        return_full=True,
-    )
-
-    text = result["text"]
-    finish_reason = result.get("finish_reason", result.get("stop_reason"))
-
-    validation = validate_answer(
-        text,
-        n_sources=len(hits),
-        finish_reason=finish_reason,
-    )
-
-    if not validation["valid"]:
-        return Answer(
-            question=question,
-            text=REFUSAL,
-            hits=hits,
-            refused=True,
-            citations_valid=True,
-            invalid_citations=validation["invalid_citations"],
-            n_citations=0,
-            truncated=validation["truncated"],
-            repaired=True,
-        )
+    text, validation, repaired = _generate_with_repair(
+        question, context, n_sources, tier=tier, strict=strict)
 
     return Answer(
         question=question,
@@ -244,6 +265,7 @@ def answer_question(question: str, retriever: Retriever, *, k: int = 12,
         n_citations=validation["n_citations"],
         truncated=validation["truncated"],
         partial_decline=validation["partial_decline"],
+        repaired=repaired,
     )
     
     
@@ -269,28 +291,9 @@ def answer_with_gold_context(
     if not hits or not context.strip():
         return Answer(question, REFUSAL, hits, True, True)
 
-    result = chat(
-        f"Question: {question}\n\nSources:\n{context}",
-        system=ANSWER_SYSTEM,
-        tier=tier,
-        return_full=True,
-    )
-
-    text = result["text"]
-    finish_reason = result.get("finish_reason", result.get("stop_reason"))
-    validation = validate_answer(text, len(hits), finish_reason)
-
-    if not validation["valid"]:
-        return Answer(
-            question=question,
-            text=REFUSAL,
-            hits=hits,
-            refused=True,
-            citations_valid=True,
-            invalid_citations=validation["invalid_citations"],
-            truncated=validation["truncated"],
-            repaired=True,
-        )
+    n_sources = _count_sources_in_context(context)
+    text, validation, repaired = _generate_with_repair(
+        question, context, n_sources, tier=tier, strict=False)
 
     return Answer(
         question=question,
@@ -302,4 +305,5 @@ def answer_with_gold_context(
         n_citations=validation["n_citations"],
         truncated=validation["truncated"],
         partial_decline=validation["partial_decline"],
+        repaired=repaired,
     )
